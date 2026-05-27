@@ -1,0 +1,59 @@
+[
+  {
+    "id": "housing-100k-2030",
+    "title": "Build 100,000 new homes per year by 2030",
+    "level": "federal",
+    "domain": "housing",
+    "source": {
+      "document": "Coalition agreement (Hoofdlijnenakkoord) 2024",
+      "url": "https://www.kabinetsformatie2023.nl/documenten/publicaties/2024/05/16/hoofdlijnenakkoord-pvv-vvd-nsc-en-bbb"
+    },
+    "target": { "value": 100000, "unit": "homes/year", "deadline": "2030-12-31" },
+    "current": {
+      "value": 73000,
+      "unit": "homes/year",
+      "asOf": "2024-12-31",
+      "sourceUrl": "https://www.cbs.nl/nl-nl/cijfers/detail/82904NED"
+    },
+    "status": "behind",
+    "notes": "Illustrative seed value pending verification against the latest CBS housing completions table."
+  },
+  {
+    "id": "climate-55-2030",
+    "title": "Reduce greenhouse-gas emissions by 55% versus 1990 by 2030",
+    "level": "federal",
+    "domain": "climate",
+    "source": {
+      "document": "Klimaatwet (Climate Act), amended 2023",
+      "url": "https://wetten.overheid.nl/BWBR0042394/2023-12-01"
+    },
+    "target": { "value": -55, "unit": "% vs 1990", "deadline": "2030-12-31" },
+    "current": {
+      "value": -37,
+      "unit": "% vs 1990",
+      "asOf": "2024-12-31",
+      "sourceUrl": "https://www.rivm.nl/broeikasgassen"
+    },
+    "status": "behind",
+    "notes": "Illustrative seed; final figures published by RIVM/Emissieregistratie."
+  },
+  {
+    "id": "defense-2pct-nato",
+    "title": "Spend at least 2% of GDP on defense (NATO floor)",
+    "level": "federal",
+    "domain": "economy",
+    "source": {
+      "document": "Defensienota 2024",
+      "url": "https://www.defensie.nl/onderwerpen/defensienota-2024"
+    },
+    "target": { "value": 2.0, "unit": "% of GDP", "deadline": "2024-12-31" },
+    "current": {
+      "value": 2.05,
+      "unit": "% of GDP",
+      "asOf": "2024-12-31",
+      "sourceUrl": "https://www.nato.int/cps/en/natohq/news_226465.htm"
+    },
+    "status": "met",
+    "notes": "NATO 2024 estimate placed NL just above the 2% threshold."
+  }
+]
