@@ -10,10 +10,10 @@ export default async function HousingPage() {
     housingIndicators.map(async (indicator) => {
       try {
         const points = await fetchIndicatorSeries(indicator);
-        const { latest, yoyDelta } = summarize(points);
-        return { indicator, latest, yoyDelta };
+        const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
+        return { indicator, latest, yoyDelta, yoyDeltaPct };
       } catch {
-        return { indicator, latest: null, yoyDelta: null };
+        return { indicator, latest: null, yoyDelta: null, yoyDeltaPct: null };
       }
     }),
   );
@@ -34,12 +34,13 @@ export default async function HousingPage() {
       </header>
 
       <section className="grid sm:grid-cols-2 gap-4">
-        {cards.map(({ indicator, latest, yoyDelta }) => (
+        {cards.map(({ indicator, latest, yoyDelta, yoyDeltaPct }) => (
           <KpiCard
             key={indicator.id}
             indicator={indicator}
             latest={latest}
             yoyDelta={yoyDelta}
+            yoyDeltaPct={yoyDeltaPct}
             href={`/housing/${indicator.id}`}
           />
         ))}

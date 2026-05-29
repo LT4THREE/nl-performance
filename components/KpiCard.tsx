@@ -6,15 +6,21 @@ export function KpiCard({
   indicator,
   latest,
   yoyDelta,
+  yoyDeltaPct,
   href,
 }: {
   indicator: IndicatorDef;
   latest: DataPoint | null;
   yoyDelta: number | null;
+  yoyDeltaPct?: number | null;
   href?: string;
 }) {
-  const trendClass = trendColor(yoyDelta, indicator.higherIsBetter);
-  const arrow = yoyDelta === null ? "" : yoyDelta > 0 ? "▲" : yoyDelta < 0 ? "▼" : "•";
+  // For percent/index units the headline delta is the absolute change in points.
+  // For count/euro units we want the percent change (computed from the prior year value).
+  const isRelativeUnit = indicator.unit === "percent" || indicator.unit === "index";
+  const display = isRelativeUnit ? yoyDelta : yoyDeltaPct ?? null;
+  const trendClass = trendColor(display, indicator.higherIsBetter);
+  const arrow = display === null ? "" : display > 0 ? "▲" : display < 0 ? "▼" : "•";
 
   const inner = (
     <article className="flex flex-col gap-3 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] hover:border-[var(--color-fg)] transition-colors h-full">
@@ -30,9 +36,9 @@ export function KpiCard({
         <span className="text-3xl font-semibold tracking-tight">
           {latest ? formatValue(latest.value, indicator.unit) : "—"}
         </span>
-        {yoyDelta !== null && (
+        {display !== null && (
           <span className={`text-sm font-medium ${trendClass}`}>
-            {arrow} {formatDelta(yoyDelta, indicator.unit)} YoY
+            {arrow} {formatDelta(display, indicator.unit)} YoY
           </span>
         )}
       </div>

@@ -36,7 +36,9 @@ export default async function IndicatorPage({
     fetchError = e instanceof Error ? e.message : "Failed to load data.";
   }
 
-  const { latest, yoyDelta } = summarize(points);
+  const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
+  const isRelativeUnit = indicator.unit === "percent" || indicator.unit === "index";
+  const displayDelta = isRelativeUnit ? yoyDelta : yoyDeltaPct;
   const relatedGoals = getGoalsByDomain(indicator.domain);
 
   return (
@@ -73,19 +75,19 @@ export default async function IndicatorPage({
               {formatValue(latest.value, indicator.unit)}
             </p>
           </div>
-          {yoyDelta !== null && (
+          {displayDelta !== null && (
             <div>
               <p className="text-xs uppercase tracking-wide text-[var(--color-muted)]">YoY change</p>
               <p
                 className={`text-2xl font-medium mt-1 ${
-                  yoyDelta === 0
+                  displayDelta === 0
                     ? "text-[var(--color-muted)]"
-                    : (yoyDelta > 0) === indicator.higherIsBetter
+                    : (displayDelta > 0) === indicator.higherIsBetter
                       ? "text-[var(--color-success)]"
                       : "text-[var(--color-danger)]"
                 }`}
               >
-                {formatDelta(yoyDelta, indicator.unit)}
+                {formatDelta(displayDelta, indicator.unit)}
               </p>
             </div>
           )}
