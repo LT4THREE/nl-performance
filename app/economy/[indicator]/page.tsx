@@ -4,10 +4,12 @@ import { DomainNav } from "@/components/DomainNav";
 import { IndicatorChart } from "@/components/IndicatorChart";
 import { DataSource } from "@/components/DataSource";
 import { GoalCard } from "@/components/GoalCard";
+import { RangeSelector } from "@/components/RangeSelector";
 import { economyIndicators, findEconomyIndicator } from "@/data/indicators/economy";
 import { fetchIndicatorSeries, fetchTableInfo, summarize } from "@/lib/cbs";
 import { getGoalsByDomain } from "@/lib/goals";
 import { formatValue, formatDelta } from "@/lib/format";
+import { filterByRange, normalizeRange } from "@/lib/range";
 
 export const revalidate = 21600;
 
@@ -17,10 +19,14 @@ export async function generateStaticParams() {
 
 export default async function IndicatorPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ indicator: string }>;
+  searchParams: Promise<{ range?: string }>;
 }) {
   const { indicator: id } = await params;
+  const { range: rangeParam } = await searchParams;
+  const range = normalizeRange(rangeParam);
   const indicator = findEconomyIndicator(id);
   if (!indicator) notFound();
 
@@ -39,6 +45,7 @@ export default async function IndicatorPage({
   const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
   const isRelativeUnit = indicator.unit === "percent" || indicator.unit === "index";
   const displayDelta = isRelativeUnit ? yoyDelta : yoyDeltaPct;
+  const filtered = filterByRange(points, range);
   const relatedGoals = getGoalsByDomain(indicator.domain);
 
   return (
@@ -96,8 +103,11 @@ export default async function IndicatorPage({
 
       {points.length > 0 && (
         <section className="space-y-3">
-          <h2 className="text-lg font-semibold">History</h2>
-          <IndicatorChart data={points} unit={indicator.unit} />
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <h2 className="text-lg font-semibold">History</h2>
+            <RangeSelector active={range} />
+          </div>
+          <IndicatorChart data={filtered} unit={indicator.unit} />
           <DataSource
             tableId={indicator.cbsTable}
             label={info?.ShortTitle ?? info?.Title}

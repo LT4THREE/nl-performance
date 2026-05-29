@@ -2,15 +2,23 @@
 
 @theme {
   --color-bg: #ffffff;
-  --color-surface: #f7f7f8;
-  --color-fg: #0a0a0a;
+  --color-surface: #f6f7f9;
+  --color-surface-strong: #eceef2;
+  --color-fg: #0b1220;
+  --color-fg-soft: #1f2937;
   --color-muted: #6b7280;
   --color-border: #e5e7eb;
-  --color-accent: #1d4ed8;
+  --color-border-strong: #d1d5db;
+  --color-accent: #2563eb;
+  --color-accent-strong: #1d4ed8;
+  --color-accent-soft: #eff6ff;
   --color-accent-fg: #ffffff;
   --color-success: #15803d;
+  --color-success-soft: #ecfdf5;
   --color-warning: #b45309;
+  --color-warning-soft: #fffbeb;
   --color-danger: #b91c1c;
+  --color-danger-soft: #fef2f2;
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, monospace);
 }
@@ -20,8 +28,27 @@ body {
   background: var(--color-bg);
   color: var(--color-fg);
   font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Suppress the default browser focus halo; we add a visible focus-visible ring only for keyboard. */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
 }
