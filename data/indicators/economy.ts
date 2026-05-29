@@ -1,13 +1,6 @@
 import type { IndicatorDef } from "@/types";
 
-/**
- * Economy domain indicators bound to CBS OData tables.
- *
- * Note: some tables are marked "Stopgezet" (discontinued) by CBS but retain
- * complete historical data. They are used here as placeholders; the registry
- * pattern makes swapping table IDs trivial when newer equivalents are
- * identified.
- */
+/** Economy domain indicators bound to current CBS OData tables. */
 export const economyIndicators: IndicatorDef[] = [
   {
     id: "unemployment-rate",
@@ -17,10 +10,9 @@ export const economyIndicators: IndicatorDef[] = [
     description:
       "Share of the labour force aged 15–74 who are without work and actively seeking work. Source: CBS, monthly.",
     cbsTable: "80590ned",
-    // Total (T001038), all ages (52052), monthly periods only (MM)
     filter:
       "Geslacht eq 'T001038' and Leeftijd eq '52052   ' and substringof('MM', Perioden)",
-    valueField: "NietSeizoengecorrigeerd_7", // headline unemployment rate, not seasonally adjusted
+    valueField: "NietSeizoengecorrigeerd_7",
     periodField: "Perioden",
     unit: "percent",
     higherIsBetter: false,
@@ -31,15 +23,27 @@ export const economyIndicators: IndicatorDef[] = [
     label: "Inflation rate (CPI, year-on-year)",
     shortLabel: "Inflation",
     description:
-      "Year-on-year change in the Consumer Price Index for all households. The standard inflation measure published monthly by CBS.",
-    cbsTable: "83131NED",
-    // 'All expenditures' aggregate, monthly observations
-    filter: "Bestedingscategorieen eq 'T001112  ' and substringof('MM', Perioden)",
-    valueField: "JaarmutatieCPI_5",
+      "Year-on-year change in the headline Consumer Price Index. Standard inflation measure, published monthly by CBS, series back to 1963.",
+    cbsTable: "70936ned",
+    filter: "substringof('MM', Perioden)",
+    valueField: "JaarmutatieCPI_1",
     periodField: "Perioden",
     unit: "percent",
     higherIsBetter: false,
-    note: "CBS marked this table discontinued in 2025; values shown are final.",
+  },
+  {
+    id: "government-debt-gdp",
+    domain: "economy",
+    label: "Government debt (% of GDP)",
+    shortLabel: "Government debt",
+    description:
+      "EMU consolidated gross debt of general government as a share of GDP. Annual values from CBS national accounts.",
+    cbsTable: "85968NED",
+    filter: "substringof('JJ', Perioden)",
+    valueField: "OverheidsschuldEMU_15",
+    periodField: "Perioden",
+    unit: "percent",
+    higherIsBetter: false,
   },
 ];
 

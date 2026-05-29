@@ -1,26 +1,58 @@
 [
   {
     "id": "housing-100k-2030",
-    "title": "Build 100,000 new homes per year by 2030",
+    "title": "Build ~100,000 new homes per year",
     "level": "federal",
     "domain": "housing",
     "source": {
-      "document": "Coalition agreement (Hoofdlijnenakkoord) 2024",
-      "url": "https://www.kabinetsformatie2023.nl/documenten/publicaties/2024/05/16/hoofdlijnenakkoord-pvv-vvd-nsc-en-bbb"
+      "document": "Coalition agreement 2026–2030 'Aan de slag — Bouwen aan een beter Nederland' (D66/VVD/CDA, 30 Jan 2026)",
+      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
     },
-    "target": { "value": 100000, "unit": "homes/year", "deadline": "2030-12-31" },
+    "target": { "value": 100000, "unit": "net homes/year", "deadline": "2030-12-31" },
     "current": {
       "value": 73000,
-      "unit": "homes/year",
-      "asOf": "2024-12-31",
-      "sourceUrl": "https://www.cbs.nl/nl-nl/cijfers/detail/82904NED"
+      "unit": "net homes/year",
+      "asOf": "2025-12-31",
+      "sourceUrl": "https://www.cbs.nl/nl-nl/cijfers/detail/83704NED"
     },
     "status": "behind",
-    "notes": "Illustrative seed value pending verification against the latest CBS housing completions table."
+    "notes": "Current value is an illustrative estimate of recent net additions to the housing stock pending verification against CBS 83704NED year-on-year change. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities."
+  },
+  {
+    "id": "defense-3p5pct-nato",
+    "title": "Increase defense spending to 3.5% of GDP",
+    "level": "federal",
+    "domain": "economy",
+    "source": {
+      "document": "Coalition agreement 2026–2030 (D66/VVD/CDA)",
+      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
+    },
+    "target": { "value": 3.5, "unit": "% of GDP", "deadline": "2030-12-31" },
+    "current": {
+      "value": 2.05,
+      "unit": "% of GDP",
+      "asOf": "2024-12-31",
+      "sourceUrl": "https://www.nato.int/cps/en/natohq/news_226465.htm"
+    },
+    "status": "behind",
+    "notes": "Up from the 2% NATO floor in the 2024 agreement. Equivalent to tens of billions of euros of additional annual spending."
+  },
+  {
+    "id": "gdp-growth-1p5pct",
+    "title": "1.5% real GDP growth per year",
+    "level": "federal",
+    "domain": "economy",
+    "source": {
+      "document": "Coalition agreement 2026–2030 (D66/VVD/CDA)",
+      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
+    },
+    "target": { "value": 1.5, "unit": "% real growth/year", "deadline": "2030-12-31" },
+    "status": "unknown",
+    "notes": "Annual real GDP growth target intended to finance higher spending on care, education and defense without raising overall tax burden. Live tracking to be wired to CBS national accounts."
   },
   {
     "id": "climate-55-2030",
-    "title": "Reduce greenhouse-gas emissions by 55% versus 1990 by 2030",
+    "title": "Reduce greenhouse-gas emissions 55% vs 1990 by 2030",
     "level": "federal",
     "domain": "climate",
     "source": {
@@ -35,25 +67,32 @@
       "sourceUrl": "https://www.rivm.nl/broeikasgassen"
     },
     "status": "behind",
-    "notes": "Illustrative seed; final figures published by RIVM/Emissieregistratie."
+    "notes": "Statutory target carried over by the 2026 coalition; emission figures published by RIVM/Emissieregistratie."
   },
   {
-    "id": "defense-2pct-nato",
-    "title": "Spend at least 2% of GDP on defense (NATO floor)",
+    "id": "nitrogen-reduction-2035",
+    "title": "Statutory nitrogen reduction by 2035",
     "level": "federal",
-    "domain": "economy",
+    "domain": "climate",
     "source": {
-      "document": "Defensienota 2024",
-      "url": "https://www.defensie.nl/onderwerpen/defensienota-2024"
+      "document": "Coalition agreement 2026–2030 (D66/VVD/CDA)",
+      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
     },
-    "target": { "value": 2.0, "unit": "% of GDP", "deadline": "2024-12-31" },
-    "current": {
-      "value": 2.05,
-      "unit": "% of GDP",
-      "asOf": "2024-12-31",
-      "sourceUrl": "https://www.nato.int/cps/en/natohq/news_226465.htm"
+    "target": { "value": -50, "unit": "% (mid-point) vs baseline", "deadline": "2035-12-31" },
+    "status": "unknown",
+    "notes": "Headline target shown is approximate mid-point of sector-specific statutory reductions: agriculture 42–46%, industry 50%, mobility 50%. To be tracked against RIVM nitrogen-deposition data."
+  },
+  {
+    "id": "education-investment-1p5b",
+    "title": "€1.5B additional structural investment in education",
+    "level": "federal",
+    "domain": "education",
+    "source": {
+      "document": "Coalition agreement 2026–2030 (D66/VVD/CDA)",
+      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
     },
-    "status": "met",
-    "notes": "NATO 2024 estimate placed NL just above the 2% threshold."
+    "target": { "value": 1.5, "unit": "€ billion/year", "deadline": "2030-12-31" },
+    "status": "unknown",
+    "notes": "Focus on basic literacy/numeracy, civic education, digital skills, and equality of opportunity."
   }
 ]
