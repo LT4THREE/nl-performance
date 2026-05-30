@@ -6,7 +6,8 @@ import { DataSource } from "@/components/DataSource";
 import { GoalCard } from "@/components/GoalCard";
 import { RangeSelector } from "@/components/RangeSelector";
 import { housingIndicators, findHousingIndicator } from "@/data/indicators/housing";
-import { fetchIndicatorSeries, fetchTableInfo, summarize } from "@/lib/cbs";
+import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
+import { fetchCbsTableInfo } from "@/lib/providers/cbs";
 import { getGoalsByDomain } from "@/lib/goals";
 import { formatValue, formatDelta } from "@/lib/format";
 import { filterByRange, normalizeRange } from "@/lib/range";
@@ -31,13 +32,14 @@ export default async function HousingIndicatorPage({
   if (!indicator) notFound();
 
   let points: Awaited<ReturnType<typeof fetchIndicatorSeries>> = [];
-  let info: Awaited<ReturnType<typeof fetchTableInfo>> | null = null;
+  let cbsTitle: string | undefined;
   let fetchError: string | null = null;
   try {
-    [points, info] = await Promise.all([
-      fetchIndicatorSeries(indicator),
-      fetchTableInfo(indicator.cbsTable),
-    ]);
+    points = await fetchIndicatorSeries(indicator);
+    if (indicator.provider === "cbs") {
+      const info = await fetchCbsTableInfo(indicator.cbsTable);
+      cbsTitle = info.ShortTitle ?? info.Title;
+    }
   } catch (e) {
     fetchError = e instanceof Error ? e.message : "Failed to load data.";
   }
@@ -108,11 +110,7 @@ export default async function HousingIndicatorPage({
             <RangeSelector active={range} />
           </div>
           <IndicatorChart data={filtered} unit={indicator.unit} />
-          <DataSource
-            tableId={indicator.cbsTable}
-            label={info?.ShortTitle ?? info?.Title}
-            asOf={latest?.periodLabel}
-          />
+          <DataSource indicator={indicator} label={cbsTitle} asOf={latest?.periodLabel} />
         </section>
       )}
 

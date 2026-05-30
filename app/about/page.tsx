@@ -191,7 +191,7 @@ const ministryCoverage: {
   { ministry: "Sociale Zaken & Werkgelegenheid (SZW)", domain: "Economy / labour market", primarySource: "CBS, UWV", status: "live" },
   { ministry: "Binnenlandse Zaken (BZK)", domain: "Housing & public administration", primarySource: "CBS, Kadaster", status: "live" },
   { ministry: "Volkshuisvesting (separate housing portfolio, 2026)", domain: "Housing", primarySource: "CBS, Kadaster, BZK", status: "live" },
-  { ministry: "Klimaat & Groene Groei (KGG)", domain: "Climate / energy", primarySource: "RIVM, PBL, CBS", status: "next" },
+  { ministry: "Klimaat & Groene Groei (KGG)", domain: "Climate / energy", primarySource: "Eurostat, RIVM, PBL, CBS", status: "live" },
   { ministry: "Infrastructuur & Waterstaat (I&W)", domain: "Climate / mobility / water", primarySource: "RIVM, PBL, RWS, CBS", status: "next" },
   { ministry: "Landbouw, Natuur & Visserij (LNV)", domain: "Climate / agriculture", primarySource: "RIVM, CBS, PBL", status: "next" },
   { ministry: "Onderwijs, Cultuur & Wetenschap (OCW)", domain: "Education", primarySource: "CBS, DUO, OECD PISA", status: "next" },

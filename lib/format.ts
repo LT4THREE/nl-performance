@@ -18,6 +18,8 @@ export function formatValue(value: number, unit: IndicatorUnit): string {
       return `€${formatNumber(value, { maximumFractionDigits: 0 })} M`;
     case "eurBillion":
       return `€${formatNumber(value, { maximumFractionDigits: 1 })} B`;
+    case "ktCO2eq":
+      return `${formatNumber(value, { maximumFractionDigits: 0 })} kt CO₂eq`;
   }
 }
 

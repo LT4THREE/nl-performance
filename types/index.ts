@@ -15,28 +15,56 @@ export type DataPoint = {
   periodLabel: string;
 };
 
-export type IndicatorUnit = "percent" | "index" | "count" | "eurMillion" | "eurBillion";
+export type IndicatorUnit = "percent" | "index" | "count" | "eurMillion" | "eurBillion" | "ktCO2eq";
 
-export type IndicatorDef = {
+export type Provider = "cbs" | "ecb" | "eurostat";
+
+/** Shared metadata across every provider. */
+type IndicatorBase = {
   id: string;
   domain: Domain;
   label: string;
   shortLabel: string;
   description: string;
-  /** CBS OData table identifier */
-  cbsTable: string;
-  /** OData $filter clause restricting to the headline series */
-  filter: string;
-  /** Field on TypedDataSet that holds the headline value */
-  valueField: string;
-  /** Field that holds the Periods code (usually "Perioden") */
-  periodField: string;
   unit: IndicatorUnit;
-  /** Whether higher = better (drives trend color) */
   higherIsBetter: boolean;
-  /** Optional source-table status note (e.g. "Discontinued — historical only") */
+  /** Optional inline caveat shown above the chart. */
   note?: string;
 };
+
+/** A CBS OData table-backed indicator. */
+export type CbsIndicator = IndicatorBase & {
+  provider: "cbs";
+  cbsTable: string;
+  /** OData $filter clause restricting to the headline series. */
+  filter: string;
+  /** Field on TypedDataSet that holds the headline value. */
+  valueField: string;
+  /** Field that holds the Periods code (usually "Perioden"). */
+  periodField: string;
+};
+
+/** An ECB SDMX series-backed indicator. */
+export type EcbIndicator = IndicatorBase & {
+  provider: "ecb";
+  /** SDMX dataflow id, e.g. "FM" (financial market). */
+  dataflow: string;
+  /** Full series key with dimensions, e.g. "D.U2.EUR.4F.KR.DFR.LEV". */
+  seriesKey: string;
+};
+
+/** A Eurostat JSON-stat dataset-backed indicator. */
+export type EurostatIndicator = IndicatorBase & {
+  provider: "eurostat";
+  /** Eurostat dataset code, e.g. "prc_hicp_manr". */
+  dataset: string;
+  /** Dimension filters as query-string entries (excluding 'time'). */
+  dimensions: Record<string, string | string[]>;
+  /** Display the value as a derived index relative to the value in this year. */
+  baselineYear?: number;
+};
+
+export type IndicatorDef = CbsIndicator | EcbIndicator | EurostatIndicator;
 
 export type GoalLevel = "federal" | "provincial" | "municipal";
 export type GoalStatus = "on-track" | "behind" | "met" | "missed" | "unknown";

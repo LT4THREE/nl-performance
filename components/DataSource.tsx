@@ -1,13 +1,16 @@
+import type { IndicatorDef } from "@/types";
+import { providerLabel, sourceCitationUrl, sourceIdentifier } from "@/lib/indicators";
+
 export function DataSource({
-  tableId,
+  indicator,
   label,
   asOf,
 }: {
-  tableId: string;
+  indicator: IndicatorDef;
   label?: string;
   asOf?: string;
 }) {
-  const href = `https://opendata.cbs.nl/statline/#/CBS/nl/dataset/${tableId}/table`;
+  const href = sourceCitationUrl(indicator);
   return (
     <p className="text-xs text-[var(--color-muted)]">
       Source:{" "}
@@ -17,7 +20,7 @@ export function DataSource({
         rel="noopener noreferrer"
         className="underline hover:text-[var(--color-fg)]"
       >
-        CBS table {tableId}
+        {providerLabel(indicator.provider)} · {sourceIdentifier(indicator)}
         {label ? ` — ${label}` : ""}
       </a>
       {asOf ? ` · last observation ${asOf}` : ""}

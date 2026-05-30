@@ -1,8 +1,10 @@
 import { DomainNav } from "@/components/DomainNav";
 import { economyIndicators } from "@/data/indicators/economy";
 import { housingIndicators } from "@/data/indicators/housing";
+import { climateIndicators } from "@/data/indicators/climate";
 import { getAllGoals } from "@/lib/goals";
-import { fetchTableInfo } from "@/lib/cbs";
+import { fetchCbsTableInfo } from "@/lib/providers/cbs";
+import { providerLabel, sourceCitationUrl, sourceIdentifier } from "@/lib/indicators";
 import type { IndicatorDef } from "@/types";
 
 export const revalidate = 86400; // 24h
@@ -17,35 +19,62 @@ type LiveSource = {
 };
 
 async function loadLiveSources(): Promise<LiveSource[]> {
-  const all = [...economyIndicators, ...housingIndicators];
+  const all = [...economyIndicators, ...housingIndicators, ...climateIndicators];
   const seen = new Map<string, LiveSource>();
+
   const results = await Promise.all(
-    all.map(async (indicator) => {
-      try {
-        const info = await fetchTableInfo(indicator.cbsTable);
+    all.map(async (indicator): Promise<LiveSource> => {
+      if (indicator.provider === "cbs") {
+        try {
+          const info = await fetchCbsTableInfo(indicator.cbsTable);
+          return {
+            indicator,
+            title: info.Title ?? info.ShortTitle ?? indicator.cbsTable,
+            period: info.Period ?? "—",
+            frequency: info.Frequency ?? "—",
+            modified: info.Modified?.slice(0, 10) ?? "—",
+            status: info.ReasonDelivery ?? "Actief",
+          };
+        } catch {
+          return {
+            indicator,
+            title: indicator.label,
+            period: "—",
+            frequency: "—",
+            modified: "—",
+            status: "Unavailable",
+          };
+        }
+      }
+      if (indicator.provider === "ecb") {
         return {
           indicator,
-          title: info.Title ?? info.ShortTitle ?? indicator.cbsTable,
-          period: info.Period ?? "—",
-          frequency: info.Frequency ?? "—",
-          modified: info.Modified?.slice(0, 10) ?? "—",
-          status: info.ReasonDelivery ?? "Actief",
-        };
-      } catch {
-        return {
-          indicator,
-          title: indicator.label,
-          period: "—",
-          frequency: "—",
+          title: "ECB Statistical Data Warehouse",
+          period: "Live",
+          frequency: indicator.seriesKey.startsWith("D")
+            ? "Daily"
+            : indicator.seriesKey.startsWith("M")
+              ? "Monthly"
+              : "—",
           modified: "—",
-          status: "Unavailable",
+          status: "Active",
         };
       }
+      // eurostat
+      return {
+        indicator,
+        title: `Eurostat ${indicator.dataset}`,
+        period: "Live",
+        frequency: "Annual or monthly (per dataset)",
+        modified: "—",
+        status: "Active",
+      };
     }),
   );
-  // De-dup by CBS table (multiple indicators can share one table).
+
   for (const r of results) {
-    if (!seen.has(r.indicator.cbsTable)) seen.set(r.indicator.cbsTable, r);
+    const key = sourceIdentifier(r.indicator);
+    if (!seen.has(key)) seen.set(key, r);
   }
   return Array.from(seen.values());
 }
@@ -64,43 +93,46 @@ export default async function SourcesPage() {
       <header className="max-w-3xl space-y-3">
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Sources</h1>
         <p className="text-[var(--color-muted)] leading-relaxed">
-          Every number on this site is sourced. This page lists the open-data tables we
-          currently query, the government documents we extract goals from, and the broader
-          ecosystem of Dutch and international institutions we plan to integrate as the
-          platform grows. All CBS data is reused under the CC-BY licence.
+          Every number on this site is sourced. This page lists the open-data series we
+          currently query — across CBS, the European Central Bank, and Eurostat — the
+          government documents we extract goals from, and the broader ecosystem of Dutch and
+          international institutions we plan to integrate as the platform grows.
         </p>
       </header>
 
       <Section
-        title="Live data tables in use"
-        subtitle="Every CBS OData table we currently call, with its native title, period coverage, publication frequency, and last-modified date — fetched from CBS at build time."
+        title="Live data series in use"
+        subtitle="Every series we currently call, across all providers. CBS metadata is fetched live from the OData catalog; ECB and Eurostat series are described from configuration."
       >
         <div className="overflow-x-auto border border-[var(--color-border)] rounded-xl">
           <table className="w-full text-sm">
             <thead className="bg-[var(--color-surface)] text-left text-xs uppercase tracking-wide text-[var(--color-muted)]">
               <tr>
-                <th className="px-4 py-3 font-medium">CBS table</th>
+                <th className="px-4 py-3 font-medium">Provider</th>
+                <th className="px-4 py-3 font-medium">Series / table</th>
                 <th className="px-4 py-3 font-medium">Indicator</th>
                 <th className="px-4 py-3 font-medium">Period</th>
                 <th className="px-4 py-3 font-medium">Frequency</th>
-                <th className="px-4 py-3 font-medium">Last modified</th>
                 <th className="px-4 py-3 font-medium">Status</th>
               </tr>
             </thead>
             <tbody>
               {live.map((s) => (
                 <tr
-                  key={s.indicator.cbsTable}
+                  key={sourceIdentifier(s.indicator) + s.indicator.id}
                   className="border-t border-[var(--color-border)] align-top"
                 >
+                  <td className="px-4 py-3">
+                    <ProviderBadge provider={s.indicator.provider} />
+                  </td>
                   <td className="px-4 py-3 font-mono text-xs">
                     <a
-                      href={`https://opendata.cbs.nl/statline/#/CBS/nl/dataset/${s.indicator.cbsTable}/table`}
+                      href={sourceCitationUrl(s.indicator)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="underline hover:text-[var(--color-accent-strong)]"
                     >
-                      {s.indicator.cbsTable}
+                      {sourceIdentifier(s.indicator)}
                     </a>
                     <div className="text-[var(--color-muted)] mt-1 font-sans normal-case">
                       {s.title}
@@ -109,7 +141,6 @@ export default async function SourcesPage() {
                   <td className="px-4 py-3">{s.indicator.shortLabel}</td>
                   <td className="px-4 py-3 text-[var(--color-muted)]">{s.period}</td>
                   <td className="px-4 py-3 text-[var(--color-muted)]">{s.frequency}</td>
-                  <td className="px-4 py-3 text-[var(--color-muted)]">{s.modified}</td>
                   <td className="px-4 py-3">
                     <span
                       className={[
@@ -131,7 +162,7 @@ export default async function SourcesPage() {
 
       <Section
         title="Goal source documents"
-        subtitle="The public documents that the goals tracked on this site are extracted from."
+        subtitle="The public documents the goals tracked on this site are extracted from."
       >
         <ul className="space-y-2">
           {goalSourceDocs.map((s) => (
@@ -155,7 +186,7 @@ export default async function SourcesPage() {
 
       <Section
         title="Data partner ecosystem"
-        subtitle="The institutions whose data we use today or plan to integrate. The Dutch open-data ecosystem is unusually rich, and a credible accountability cockpit eventually needs to draw from all of them."
+        subtitle="The institutions whose data we use today or plan to integrate. A credible accountability cockpit eventually needs to draw from all of them."
       >
         <div className="grid md:grid-cols-2 gap-4">
           {partners.map((g) => (
@@ -196,10 +227,7 @@ export default async function SourcesPage() {
         </div>
       </Section>
 
-      <Section
-        title="Licensing & reuse"
-        subtitle="What you can do with the data shown here."
-      >
+      <Section title="Licensing & reuse" subtitle="What you can do with the data shown here.">
         <ul className="list-disc pl-5 text-sm text-[var(--color-muted)] space-y-1">
           <li>
             CBS data is published under{" "}
@@ -211,15 +239,16 @@ export default async function SourcesPage() {
             >
               CC-BY 4.0
             </a>
-            ; attribution is preserved on every chart.
+            ; ECB and Eurostat publish under their own open-data terms (both permit reuse with
+            attribution). Attribution is preserved on every chart.
           </li>
           <li>
             Goal source documents are public Dutch government materials, linked back to their
             original location.
           </li>
           <li>
-            This site is an independent prototype. It is not affiliated with CBS, the Dutch
-            government, or any party.
+            This site is an independent prototype. It is not affiliated with CBS, the ECB,
+            Eurostat, the Dutch government, or any party.
           </li>
         </ul>
       </Section>
@@ -251,6 +280,26 @@ function Section({
   );
 }
 
+function ProviderBadge({ provider }: { provider: IndicatorDef["provider"] }) {
+  const cfg: Record<
+    IndicatorDef["provider"],
+    { label: string; classes: string }
+  > = {
+    cbs: { label: providerLabel("cbs"), classes: "bg-blue-50 text-blue-800" },
+    ecb: { label: providerLabel("ecb"), classes: "bg-amber-50 text-amber-800" },
+    eurostat: {
+      label: providerLabel("eurostat"),
+      classes: "bg-indigo-50 text-indigo-800",
+    },
+  };
+  const c = cfg[provider];
+  return (
+    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${c.classes}`}>
+      {c.label}
+    </span>
+  );
+}
+
 type Status = "in-use" | "planned";
 type Partner = { name: string; url: string; scope: string; status: Status };
 type PartnerGroup = { title: string; items: Partner[] };
@@ -267,10 +316,17 @@ const partners: PartnerGroup[] = [
         status: "in-use",
       },
       {
+        name: "ECB (European Central Bank)",
+        url: "https://data.ecb.europa.eu/",
+        scope:
+          "Monetary policy rates (deposit facility, MRO), Eurosystem balance sheet, banking and payment statistics via SDMX-JSON.",
+        status: "in-use",
+      },
+      {
         name: "DNB (Dutch Central Bank)",
         url: "https://www.dnb.nl/en/statistics/",
         scope:
-          "Interest rates, mortgage rates, financial stability, banking sector indicators, payment statistics.",
+          "Dutch-specific mortgage rates, savings rates, financial stability indicators, payment statistics.",
         status: "planned",
       },
       {
@@ -302,8 +358,7 @@ const partners: PartnerGroup[] = [
       {
         name: "SCP (Social and Cultural Planning Office)",
         url: "https://www.scp.nl/english",
-        scope:
-          "Well-being, social cohesion, quality of life. The natural source for the Social domain.",
+        scope: "Well-being, social cohesion, quality of life. The natural source for the Social domain.",
         status: "planned",
       },
       {
@@ -321,7 +376,7 @@ const partners: PartnerGroup[] = [
         name: "RIVM (National Institute for Public Health)",
         url: "https://www.rivm.nl/en",
         scope:
-          "Greenhouse-gas emissions (Emissieregistratie), nitrogen deposition, vaccination, infectious disease, air quality.",
+          "Authoritative Dutch-source GHG emissions (Emissieregistratie), nitrogen deposition, vaccination, infectious disease, air quality. Replaces Eurostat-as-proxy for emissions once integrated.",
         status: "planned",
       },
       {
@@ -363,8 +418,9 @@ const partners: PartnerGroup[] = [
       {
         name: "Eurostat",
         url: "https://ec.europa.eu/eurostat",
-        scope: "Harmonised EU statistics — critical for NL vs Eurozone comparisons.",
-        status: "planned",
+        scope:
+          "Harmonised EU statistics — critical for NL vs Eurozone comparisons and as a stable carrier for nationally-reported emissions data.",
+        status: "in-use",
       },
       {
         name: "OECD",
@@ -379,7 +435,7 @@ const partners: PartnerGroup[] = [
         status: "planned",
       },
       {
-        name: "IMF / World Bank / ECB",
+        name: "IMF / World Bank",
         url: "https://data.imf.org/",
         scope: "Fiscal, monetary, development comparators.",
         status: "planned",

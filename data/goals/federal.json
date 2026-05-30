@@ -61,13 +61,13 @@
     },
     "target": { "value": -55, "unit": "% vs 1990", "deadline": "2030-12-31" },
     "current": {
-      "value": -37,
+      "value": -35.8,
       "unit": "% vs 1990",
-      "asOf": "2024-12-31",
-      "sourceUrl": "https://www.rivm.nl/broeikasgassen"
+      "asOf": "2023-12-31",
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/env_air_gge/default/table"
     },
     "status": "behind",
-    "notes": "Statutory target carried over by the 2026 coalition; emission figures published by RIVM/Emissieregistratie."
+    "notes": "Current value computed from Eurostat env_air_gge total GHG emissions (excluding LULUCF and memo items): 146,441 kt CO₂eq in 2023 vs 228,103 kt in 1990. Statutory target carried over by the 2026 coalition; emission figures also published by RIVM/Emissieregistratie."
   },
   {
     "id": "nitrogen-reduction-2035",

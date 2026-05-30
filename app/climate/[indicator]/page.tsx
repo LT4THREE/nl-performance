@@ -5,20 +5,19 @@ import { IndicatorChart } from "@/components/IndicatorChart";
 import { DataSource } from "@/components/DataSource";
 import { GoalCard } from "@/components/GoalCard";
 import { RangeSelector } from "@/components/RangeSelector";
-import { economyIndicators, findEconomyIndicator } from "@/data/indicators/economy";
+import { climateIndicators, findClimateIndicator } from "@/data/indicators/climate";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
-import { fetchCbsTableInfo } from "@/lib/providers/cbs";
 import { getGoalsByDomain } from "@/lib/goals";
 import { formatValue, formatDelta } from "@/lib/format";
 import { filterByRange, normalizeRange } from "@/lib/range";
 
-export const revalidate = 21600;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  return economyIndicators.map((i) => ({ indicator: i.id }));
+  return climateIndicators.map((i) => ({ indicator: i.id }));
 }
 
-export default async function IndicatorPage({
+export default async function ClimateIndicatorPage({
   params,
   searchParams,
 }: {
@@ -28,18 +27,13 @@ export default async function IndicatorPage({
   const { indicator: id } = await params;
   const { range: rangeParam } = await searchParams;
   const range = normalizeRange(rangeParam);
-  const indicator = findEconomyIndicator(id);
+  const indicator = findClimateIndicator(id);
   if (!indicator) notFound();
 
   let points: Awaited<ReturnType<typeof fetchIndicatorSeries>> = [];
-  let cbsTitle: string | undefined;
   let fetchError: string | null = null;
   try {
     points = await fetchIndicatorSeries(indicator);
-    if (indicator.provider === "cbs") {
-      const info = await fetchCbsTableInfo(indicator.cbsTable);
-      cbsTitle = info.ShortTitle ?? info.Title;
-    }
   } catch (e) {
     fetchError = e instanceof Error ? e.message : "Failed to load data.";
   }
@@ -52,11 +46,11 @@ export default async function IndicatorPage({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 space-y-10">
-      <DomainNav active="economy" />
+      <DomainNav active="climate" />
 
       <div className="text-sm text-[var(--color-muted)]">
-        <Link href="/economy" className="underline hover:text-[var(--color-fg)]">
-          ← Economy
+        <Link href="/climate" className="underline hover:text-[var(--color-fg)]">
+          ← Climate
         </Link>
       </div>
 
@@ -70,7 +64,7 @@ export default async function IndicatorPage({
 
       {fetchError && (
         <div className="p-4 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-sm">
-          Could not load data from CBS right now. ({fetchError})
+          Could not load data from Eurostat right now. ({fetchError})
         </div>
       )}
 
@@ -110,7 +104,7 @@ export default async function IndicatorPage({
             <RangeSelector active={range} />
           </div>
           <IndicatorChart data={filtered} unit={indicator.unit} />
-          <DataSource indicator={indicator} label={cbsTitle} asOf={latest?.periodLabel} />
+          <DataSource indicator={indicator} asOf={latest?.periodLabel} />
         </section>
       )}
 

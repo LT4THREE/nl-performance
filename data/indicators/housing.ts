@@ -3,6 +3,7 @@ import type { IndicatorDef } from "@/types";
 /** Housing domain indicators bound to current CBS OData tables. */
 export const housingIndicators: IndicatorDef[] = [
   {
+    provider: "cbs",
     id: "average-house-price",
     domain: "housing",
     label: "Average sale price (existing homes)",
@@ -17,6 +18,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: false,
   },
   {
+    provider: "cbs",
     id: "house-price-yoy",
     domain: "housing",
     label: "House price change (year-on-year)",
@@ -31,6 +33,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: false,
   },
   {
+    provider: "cbs",
     id: "homes-sold",
     domain: "housing",
     label: "Existing homes sold (monthly)",
@@ -45,6 +48,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: true,
   },
   {
+    provider: "cbs",
     id: "housing-stock",
     domain: "housing",
     label: "Total housing stock (start of year)",

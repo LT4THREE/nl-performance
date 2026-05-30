@@ -9,4 +9,4 @@ export const domains: DomainMeta[] = [
   { id: "health", label: "Health", description: "Outcomes, access, public health." },
 ];
 
-export const enabledDomains = new Set<DomainMeta["id"]>(["economy", "housing"]);
+export const enabledDomains = new Set<DomainMeta["id"]>(["economy", "housing", "climate"]);

@@ -1,8 +1,9 @@
 import type { IndicatorDef } from "@/types";
 
-/** Economy domain indicators bound to current CBS OData tables. */
+/** Economy domain indicators. */
 export const economyIndicators: IndicatorDef[] = [
   {
+    provider: "cbs",
     id: "unemployment-rate",
     domain: "economy",
     label: "Unemployment rate (15–74)",
@@ -18,6 +19,7 @@ export const economyIndicators: IndicatorDef[] = [
     higherIsBetter: false,
   },
   {
+    provider: "cbs",
     id: "inflation-rate",
     domain: "economy",
     label: "Inflation rate (CPI, year-on-year)",
@@ -32,6 +34,7 @@ export const economyIndicators: IndicatorDef[] = [
     higherIsBetter: false,
   },
   {
+    provider: "cbs",
     id: "government-debt-gdp",
     domain: "economy",
     label: "Government debt (% of GDP)",
@@ -42,6 +45,19 @@ export const economyIndicators: IndicatorDef[] = [
     filter: "substringof('JJ', Perioden)",
     valueField: "OverheidsschuldEMU_15",
     periodField: "Perioden",
+    unit: "percent",
+    higherIsBetter: false,
+  },
+  {
+    provider: "ecb",
+    id: "ecb-deposit-rate",
+    domain: "economy",
+    label: "ECB deposit facility rate",
+    shortLabel: "ECB rate",
+    description:
+      "The rate the Eurosystem pays banks on overnight deposits. Set by the ECB Governing Council and the dominant transmission channel for Dutch mortgage and savings rates. Source: ECB Data Portal, daily.",
+    dataflow: "FM",
+    seriesKey: "D.U2.EUR.4F.KR.DFR.LEV",
     unit: "percent",
     higherIsBetter: false,
   },
