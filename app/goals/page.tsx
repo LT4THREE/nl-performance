@@ -1,7 +1,7 @@
 import { DomainNav } from "@/components/DomainNav";
 import { GoalCard } from "@/components/GoalCard";
-import { GoalFilters, filterGoals } from "@/components/GoalFilters";
-import { getAllGoals } from "@/lib/goals";
+import { GoalFilters } from "@/components/GoalFilters";
+import { filterGoals, getAllGoals } from "@/lib/goals";
 import type { Domain, GoalLevel, GoalStatus } from "@/types";
 
 function normLevel(v: string | undefined): GoalLevel | "all" {

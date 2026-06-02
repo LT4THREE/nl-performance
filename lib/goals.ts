@@ -39,6 +39,27 @@ export function getGoalsByDomain(domain: Goal["domain"]): Goal[] {
   return getAllGoals().filter((g) => g.domain === domain);
 }
 
+/**
+ * Apply the three goal filters used on /goals. Lives in lib/ so server
+ * components can call it directly — moving it into components/GoalFilters.tsx
+ * (which is "use client") triggered a Next.js boundary error on import.
+ */
+export function filterGoals(
+  goals: Goal[],
+  active: {
+    level?: Goal["level"] | "all";
+    domain?: Goal["domain"] | "all";
+    status?: Goal["status"] | "all";
+  },
+): Goal[] {
+  return goals.filter((g) => {
+    if (active.level && active.level !== "all" && g.level !== active.level) return false;
+    if (active.domain && active.domain !== "all" && g.domain !== active.domain) return false;
+    if (active.status && active.status !== "all" && g.status !== active.status) return false;
+    return true;
+  });
+}
+
 export function progressPct(goal: Goal): number | null {
   if (!goal.current) return null;
   // Naive linear progress: current / target, clamped to [0, 100].

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import type { Goal, GoalLevel, GoalStatus, Domain } from "@/types";
+import type { GoalLevel, GoalStatus, Domain } from "@/types";
 
 type Active = {
   level?: GoalLevel | "all";
@@ -103,14 +103,6 @@ function FilterGroup({
   );
 }
 
-export function filterGoals(
-  goals: Goal[],
-  active: Active,
-): Goal[] {
-  return goals.filter((g) => {
-    if (active.level && active.level !== "all" && g.level !== active.level) return false;
-    if (active.domain && active.domain !== "all" && g.domain !== active.domain) return false;
-    if (active.status && active.status !== "all" && g.status !== active.status) return false;
-    return true;
-  });
-}
+// filterGoals lives in lib/goals.ts so server components can import it
+// — exporting non-component functions from a "use client" module is
+// disallowed by Next.js 16's boundary enforcement.
