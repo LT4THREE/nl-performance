@@ -17,6 +17,8 @@ export type DataPoint = {
 
 export type IndicatorUnit = "percent" | "index" | "count" | "eurMillion" | "eurBillion" | "ktCO2eq";
 
+export type Frequency = "monthly" | "quarterly" | "annual" | "daily";
+
 export type Provider = "cbs" | "ecb" | "eurostat";
 
 /** Shared metadata across every provider. */
@@ -27,6 +29,8 @@ type IndicatorBase = {
   shortLabel: string;
   description: string;
   unit: IndicatorUnit;
+  /** Native publication frequency. Used by formatPeriod and strict YoY. */
+  frequency: Frequency;
   higherIsBetter: boolean;
   /** Optional inline caveat shown above the chart. */
   note?: string;

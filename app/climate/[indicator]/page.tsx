@@ -8,7 +8,8 @@ import { RangeSelector } from "@/components/RangeSelector";
 import { climateIndicators, findClimateIndicator } from "@/data/indicators/climate";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
 import { getGoalsByDomain } from "@/lib/goals";
-import { formatValue, formatDelta } from "@/lib/format";
+import { formatValue, formatDelta, formatPeriod } from "@/lib/format";
+import { SchemaOrgDataset } from "@/components/SchemaOrgDataset";
 import { filterByRange, normalizeRange } from "@/lib/range";
 import { indicatorMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -29,7 +30,7 @@ export async function generateMetadata({
   if (!indicator) return { title: "Indicator not found" };
   try {
     const points = await fetchIndicatorSeries(indicator);
-    const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
+    const { latest, yoyDelta, yoyDeltaPct } = summarize(points, indicator.frequency);
     const isRelative = indicator.unit === "percent" || indicator.unit === "index";
     return indicatorMetadata(indicator, latest, isRelative ? yoyDelta : yoyDeltaPct, `/climate/${id}`);
   } catch {
@@ -58,7 +59,7 @@ export default async function ClimateIndicatorPage({
     fetchError = e instanceof Error ? e.message : "Failed to load data.";
   }
 
-  const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
+  const { latest, yoyDelta, yoyDeltaPct } = summarize(points, indicator.frequency);
   const isRelativeUnit = indicator.unit === "percent" || indicator.unit === "index";
   const displayDelta = isRelativeUnit ? yoyDelta : yoyDeltaPct;
   const filtered = filterByRange(points, range);
@@ -92,7 +93,7 @@ export default async function ClimateIndicatorPage({
         <section className="flex flex-wrap items-baseline gap-6 border-b border-[var(--color-border)] pb-6">
           <div>
             <p className="text-xs uppercase tracking-wide text-[var(--color-muted)]">
-              Latest ({latest.periodLabel})
+              Latest ({formatPeriod(latest.date, indicator.frequency)})
             </p>
             <p className="text-5xl font-semibold tracking-tight mt-1">
               {formatValue(latest.value, indicator.unit)}
@@ -124,7 +125,8 @@ export default async function ClimateIndicatorPage({
             <RangeSelector active={range} />
           </div>
           <IndicatorChart data={filtered} unit={indicator.unit} />
-          <DataSource indicator={indicator} asOf={latest?.periodLabel} />
+          <DataSource indicator={indicator} asOf={latest ? formatPeriod(latest.date, indicator.frequency) : undefined} />
+          <SchemaOrgDataset indicator={indicator} points={points} />
         </section>
       )}
 

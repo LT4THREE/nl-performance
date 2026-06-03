@@ -45,10 +45,12 @@ export default function AboutPage() {
           </li>
           <li>Indicators are fetched at request time and cached for 6 hours (24 h for annual series).</li>
           <li>
-            Year-on-year deltas compare the latest observation to the closest observation
-            ~12 months earlier; for count and currency units the headline change is the
-            percent change of that pair. (A precise-frequency variant — exactly T-12m / T-4q /
-            T-1y — is on the next-iteration backlog.)
+            <strong>Year-on-year deltas are strict.</strong> For monthly series we compare to
+            the observation exactly twelve months earlier (same month, prior calendar year);
+            for quarterly, exactly four quarters earlier; for annual, the prior year. If the
+            exact prior observation is missing we show <code>YoY n/a</code> rather than
+            substituting the nearest neighbour. For count and currency units the headline
+            change is the percent change of that exact pair.
           </li>
           <li>
             Goal progress is shown as <code>current ÷ target</code>. For non-linear targets

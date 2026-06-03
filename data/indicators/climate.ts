@@ -19,6 +19,7 @@ export const climateIndicators: IndicatorDef[] = [
     },
     baselineYear: 1990,
     unit: "percent",
+    frequency: "annual",
     higherIsBetter: false,
   },
   {
@@ -37,6 +38,7 @@ export const climateIndicators: IndicatorDef[] = [
       unit: "THS_T",
     },
     unit: "ktCO2eq",
+    frequency: "annual",
     higherIsBetter: false,
   },
 ];

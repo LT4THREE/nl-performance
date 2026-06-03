@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { DataPoint, IndicatorDef } from "@/types";
-import { formatValue, formatDelta } from "@/lib/format";
+import { formatValue, formatDelta, formatPeriod } from "@/lib/format";
 
 const SITE = "https://nl-performance-two.vercel.app";
 
@@ -17,7 +17,7 @@ export function indicatorMetadata(
   path: string,
 ): Metadata {
   const valueStr = latest ? formatValue(latest.value, indicator.unit) : null;
-  const periodStr = latest?.periodLabel;
+  const periodStr = latest ? formatPeriod(latest.date, indicator.frequency) : null;
   const yoyStr =
     yoyDeltaForDisplay !== null
       ? `${yoyDeltaForDisplay > 0 ? "+" : ""}${formatDelta(yoyDeltaForDisplay, indicator.unit)} YoY`

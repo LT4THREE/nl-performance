@@ -15,6 +15,7 @@ export const educationIndicators: IndicatorDef[] = [
     valueField: "TotaalOverheidsuitgavenAlsVanBbp_19",
     periodField: "Perioden",
     unit: "percent",
+    frequency: "annual",
     higherIsBetter: true,
   },
   {
@@ -30,6 +31,7 @@ export const educationIndicators: IndicatorDef[] = [
     valueField: "TotaalOverheidsuitgavenAanOnderwijs_2",
     periodField: "Perioden",
     unit: "eurMillion",
+    frequency: "annual",
     higherIsBetter: true,
   },
 ];

@@ -2,7 +2,7 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { PlannedNext } from "@/components/PlannedNext";
 import { economyIndicators } from "@/data/indicators/economy";
-import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
+import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
 import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 21600;
@@ -18,11 +18,11 @@ export default async function EconomyPage() {
   const cards = await Promise.all(
     economyIndicators.map(async (indicator) => {
       try {
-        const points = await fetchIndicatorSeries(indicator);
-        const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
-        return { indicator, latest, yoyDelta, yoyDeltaPct };
+        const { points, fetchedAt } = await fetchIndicatorWithTimestamp(indicator);
+        const { latest, yoyDelta, yoyDeltaPct } = summarize(points, indicator.frequency);
+        return { indicator, latest, yoyDelta, yoyDeltaPct, series: points, fetchedAt };
       } catch {
-        return { indicator, latest: null, yoyDelta: null, yoyDeltaPct: null };
+        return { indicator, latest: null, yoyDelta: null, yoyDeltaPct: null, series: [], fetchedAt: undefined };
       }
     }),
   );
@@ -41,13 +41,15 @@ export default async function EconomyPage() {
       </header>
 
       <section className="grid sm:grid-cols-2 gap-4">
-        {cards.map(({ indicator, latest, yoyDelta, yoyDeltaPct }) => (
+        {cards.map(({ indicator, latest, yoyDelta, yoyDeltaPct, series, fetchedAt }) => (
           <KpiCard
             key={indicator.id}
             indicator={indicator}
             latest={latest}
             yoyDelta={yoyDelta}
             yoyDeltaPct={yoyDeltaPct}
+            series={series}
+            fetchedAt={fetchedAt}
             href={`/economy/${indicator.id}`}
           />
         ))}

@@ -16,6 +16,7 @@ export const healthIndicators: IndicatorDef[] = [
     valueField: "LevensverwachtingLV_1",
     periodField: "Perioden",
     unit: "count",
+    frequency: "annual",
     higherIsBetter: true,
   },
   {
@@ -32,6 +33,7 @@ export const healthIndicators: IndicatorDef[] = [
     valueField: "LVInAlsGoedErvarenGezondheid_2",
     periodField: "Perioden",
     unit: "count",
+    frequency: "annual",
     higherIsBetter: true,
   },
 ];

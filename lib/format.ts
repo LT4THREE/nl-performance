@@ -1,6 +1,41 @@
-import type { IndicatorUnit } from "@/types";
+import type { Frequency, IndicatorUnit } from "@/types";
 
 const nl = "nl-NL";
+const en = "en-US";
+
+/**
+ * Single source of truth for how observation periods are displayed across
+ * cards, headers, and chart axes. English month names, capitalized.
+ *   monthly   → "Apr 2026"
+ *   quarterly → "Q2 2026"
+ *   annual    → "2025"
+ *   daily     → "2 Jun 2026"
+ */
+export function formatPeriod(iso: string, frequency: Frequency): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (!Number.isFinite(d.getTime())) return iso;
+  if (frequency === "annual") {
+    return String(d.getUTCFullYear());
+  }
+  if (frequency === "quarterly") {
+    const q = Math.floor(d.getUTCMonth() / 3) + 1;
+    return `Q${q} ${d.getUTCFullYear()}`;
+  }
+  if (frequency === "daily") {
+    return new Intl.DateTimeFormat(en, {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(d);
+  }
+  // monthly
+  return new Intl.DateTimeFormat(en, {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(d);
+}
 
 export function formatNumber(value: number, opts?: Intl.NumberFormatOptions): string {
   return new Intl.NumberFormat(nl, opts).format(value);
@@ -29,11 +64,6 @@ export function formatDelta(delta: number, unit: IndicatorUnit): string {
     return `${sign}${formatNumber(delta, { maximumFractionDigits: 1 })} pt`;
   }
   return `${sign}${formatNumber(delta, { maximumFractionDigits: 1 })}%`;
-}
-
-export function formatPeriod(iso: string): string {
-  const d = new Date(iso);
-  return new Intl.DateTimeFormat(nl, { month: "short", year: "numeric" }).format(d);
 }
 
 /**

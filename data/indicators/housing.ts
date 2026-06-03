@@ -15,6 +15,7 @@ export const housingIndicators: IndicatorDef[] = [
     valueField: "GemiddeldeVerkoopprijs_7",
     periodField: "Perioden",
     unit: "count",
+    frequency: "monthly",
     higherIsBetter: false,
   },
   {
@@ -30,6 +31,7 @@ export const housingIndicators: IndicatorDef[] = [
     valueField: "OntwikkelingTOVEenJaarEerder_3",
     periodField: "Perioden",
     unit: "percent",
+    frequency: "monthly",
     higherIsBetter: false,
   },
   {
@@ -45,6 +47,7 @@ export const housingIndicators: IndicatorDef[] = [
     valueField: "VerkochteWoningen_4",
     periodField: "Perioden",
     unit: "count",
+    frequency: "monthly",
     higherIsBetter: true,
   },
   {
@@ -61,6 +64,7 @@ export const housingIndicators: IndicatorDef[] = [
     valueField: "BeginstandWoningvoorraad_1",
     periodField: "Perioden",
     unit: "count",
+    frequency: "annual",
     higherIsBetter: true,
   },
 ];

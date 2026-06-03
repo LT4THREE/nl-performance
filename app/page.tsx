@@ -3,7 +3,8 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { economyIndicators } from "@/data/indicators/economy";
 import { housingIndicators } from "@/data/indicators/housing";
-import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
+import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
+import { computeHeroDivergence } from "@/lib/hero";
 import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 21600;
@@ -28,14 +29,16 @@ export default async function Home() {
   const results = await Promise.all(
     featured.map(async (indicator) => {
       try {
-        const points = await fetchIndicatorSeries(indicator);
-        const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
-        return { indicator, latest, yoyDelta, yoyDeltaPct };
+        const { points, fetchedAt } = await fetchIndicatorWithTimestamp(indicator);
+        const { latest, yoyDelta, yoyDeltaPct } = summarize(points, indicator.frequency);
+        return { indicator, latest, yoyDelta, yoyDeltaPct, series: points, fetchedAt };
       } catch {
-        return { indicator, latest: null, yoyDelta: null, yoyDeltaPct: null };
+        return { indicator, latest: null, yoyDelta: null, yoyDeltaPct: null, series: [], fetchedAt: undefined };
       }
     }),
   );
+
+  const divergence = computeHeroDivergence();
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 space-y-14">
@@ -43,13 +46,19 @@ export default async function Home() {
 
       <section className="max-w-3xl space-y-4">
         <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
-          How is the Netherlands performing?
+          How is the Netherlands performing against its own promises?
         </h1>
-        <p className="text-lg text-[var(--color-muted)] leading-relaxed">
-          A single, transparent view of factual indicators about the country alongside the
-          public goals that federal, provincial, and municipal governments have committed to —
-          and how they are delivering against them.
-        </p>
+        {divergence ? (
+          <p className="text-lg text-[var(--color-muted)] leading-relaxed">
+            {divergence.sentence}
+          </p>
+        ) : (
+          <p className="text-lg text-[var(--color-muted)] leading-relaxed">
+            A single, transparent view of factual indicators about the country alongside the
+            public goals that federal, provincial, and municipal governments have committed to
+            — and how they are delivering against them.
+          </p>
+        )}
         <div className="flex flex-wrap gap-3 pt-2">
           <Link
             href="/economy"
@@ -70,17 +79,19 @@ export default async function Home() {
         <div className="flex items-baseline justify-between gap-3 flex-wrap">
           <h2 className="text-xl font-semibold">Snapshot</h2>
           <p className="text-xs text-[var(--color-muted)]">
-            Latest observations from CBS, refreshed every 6 hours
+            Indicators cached up to 6 hours; see each card for fetch time.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {results.map(({ indicator, latest, yoyDelta, yoyDeltaPct }) => (
+          {results.map(({ indicator, latest, yoyDelta, yoyDeltaPct, series, fetchedAt }) => (
             <KpiCard
               key={indicator.id}
               indicator={indicator}
               latest={latest}
               yoyDelta={yoyDelta}
               yoyDeltaPct={yoyDeltaPct}
+              series={series}
+              fetchedAt={fetchedAt}
               href={`/${indicator.domain}/${indicator.id}`}
             />
           ))}

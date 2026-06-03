@@ -16,6 +16,7 @@ export const economyIndicators: IndicatorDef[] = [
     valueField: "NietSeizoengecorrigeerd_7",
     periodField: "Perioden",
     unit: "percent",
+    frequency: "monthly",
     higherIsBetter: false,
   },
   {
@@ -31,6 +32,7 @@ export const economyIndicators: IndicatorDef[] = [
     valueField: "JaarmutatieCPI_1",
     periodField: "Perioden",
     unit: "percent",
+    frequency: "monthly",
     higherIsBetter: false,
   },
   {
@@ -46,6 +48,7 @@ export const economyIndicators: IndicatorDef[] = [
     valueField: "OverheidsschuldEMU_15",
     periodField: "Perioden",
     unit: "percent",
+    frequency: "annual",
     higherIsBetter: false,
   },
   {
@@ -59,6 +62,7 @@ export const economyIndicators: IndicatorDef[] = [
     dataflow: "FM",
     seriesKey: "D.U2.EUR.4F.KR.DFR.LEV",
     unit: "percent",
+    frequency: "daily",
     higherIsBetter: false,
   },
 ];

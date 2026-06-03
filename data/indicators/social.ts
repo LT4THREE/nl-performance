@@ -15,6 +15,7 @@ export const socialIndicators: IndicatorDef[] = [
     valueField: "TotaleBevolking_1",
     periodField: "Perioden",
     unit: "count",
+    frequency: "annual",
     higherIsBetter: true,
   },
 ];
