@@ -386,11 +386,15 @@ const goldenStack: GoldenStackRow[] = [
   {
     topic: "Education",
     status: "partial",
-    summary: "Government education spending (% GDP and absolute) live from CBS 80509ned. DUO open onderwijsdata planned for enrolment, attainment, dropout. OECD PISA for international benchmarks.",
+    summary: "Government spending live from CBS; tertiary attainment of the 25–64 population live from Eurostat. DUO open onderwijsdata planned for enrolment by institution and early school leavers. OECD PISA (every 3 years) for international literacy / numeracy / science benchmarks. Global university rankings (THE / QS / Shanghai ARWU) planned via manual annual curation — none publish a public API.",
     sources: [
       { name: "CBS Onderwijs", url: "https://www.cbs.nl/en-gb/our-services/open-data", role: "Spending, attainment, system metrics" },
-      { name: "DUO Open Onderwijsdata", url: "https://duo.nl/open_onderwijsdata/", role: "Enrolment, schools, dropout, financing" },
-      { name: "OECD PISA", url: "https://www.oecd.org/pisa/", role: "International benchmarks for student outcomes" },
+      { name: "Eurostat edat_lfse_03", url: "https://ec.europa.eu/eurostat/databrowser/view/edat_lfse_03/default/table", role: "Tertiary attainment, ages 25–64" },
+      { name: "DUO Open Onderwijsdata", url: "https://duo.nl/open_onderwijsdata/", role: "Enrolment by institution, dropout, financing" },
+      { name: "OECD PISA", url: "https://www.oecd.org/pisa/", role: "International benchmarks for student outcomes (every 3 years)" },
+      { name: "Times Higher Education", url: "https://www.timeshighereducation.com/world-university-rankings", role: "Global university ranking (annual, manual ingestion)" },
+      { name: "QS World University Rankings", url: "https://www.topuniversities.com/world-university-rankings", role: "Global university ranking (annual, manual ingestion)" },
+      { name: "Shanghai ARWU", url: "https://www.shanghairanking.com/rankings/arwu/", role: "Global university ranking (annual, manual ingestion)" },
     ],
   },
   {

@@ -27,9 +27,10 @@ export const plannedNext: Record<Domain, { metric: string; source: string }[]> =
     { metric: "Trust in institutions", source: "SCP / CBS" },
   ],
   education: [
-    { metric: "PISA scores vs OECD median", source: "OECD PISA" },
-    { metric: "Early school leavers", source: "DUO / CBS" },
-    { metric: "Higher-education enrolment", source: "DUO" },
+    { metric: "PISA scores (reading / maths / science) + trendlines", source: "OECD, every 3 years" },
+    { metric: "Higher-education enrolment by institution", source: "DUO open onderwijsdata" },
+    { metric: "Dutch universities in THE / QS / ARWU global rankings", source: "Manual annual curation" },
+    { metric: "Early school leavers (voortijdig schoolverlaten)", source: "DUO / CBS" },
   ],
   health: [
     { metric: "Mental-health waiting list times", source: "NZa" },
