@@ -1,5 +1,6 @@
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
+import { PlannedNext } from "@/components/PlannedNext";
 import { socialIndicators } from "@/data/indicators/social";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
 import { pageMetadata } from "@/lib/seo";
@@ -34,10 +35,9 @@ export default async function SocialPage() {
         <p className="text-sm text-[var(--color-muted)] uppercase tracking-wide">Domain</p>
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Social</h1>
         <p className="text-[var(--color-muted)] leading-relaxed">
-          Population, longevity, and well-being. The headline measures here line up with the
-          'here-and-now' dimension of the CBS Monitor Brede Welvaart — total population, life
-          expectancy, and years lived in self-reported good health. Inequality and
-          household-income indicators come next, alongside SCP well-being data.
+          Population and the broader well-being of Dutch society. Income inequality and the
+          components of net migration come next, alongside SCP well-being indicators. Life
+          expectancy and healthy life expectancy now live under <a href="/health" className="underline hover:text-[var(--color-fg)]">Health</a>.
         </p>
       </header>
 
@@ -53,6 +53,8 @@ export default async function SocialPage() {
           />
         ))}
       </section>
+
+      <PlannedNext domain="social" />
     </div>
   );
 }

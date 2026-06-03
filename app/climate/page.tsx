@@ -1,5 +1,6 @@
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
+import { PlannedNext } from "@/components/PlannedNext";
 import { climateIndicators } from "@/data/indicators/climate";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
 import { pageMetadata } from "@/lib/seo";
@@ -55,6 +56,8 @@ export default async function ClimatePage() {
           />
         ))}
       </section>
+
+      <PlannedNext domain="climate" />
     </div>
   );
 }

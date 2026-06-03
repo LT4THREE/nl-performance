@@ -1,5 +1,6 @@
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
+import { PlannedNext } from "@/components/PlannedNext";
 import { educationIndicators } from "@/data/indicators/education";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
 import { pageMetadata } from "@/lib/seo";
@@ -53,6 +54,8 @@ export default async function EducationPage() {
           />
         ))}
       </section>
+
+      <PlannedNext domain="education" />
     </div>
   );
 }

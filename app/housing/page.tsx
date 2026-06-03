@@ -1,5 +1,6 @@
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
+import { PlannedNext } from "@/components/PlannedNext";
 import { housingIndicators } from "@/data/indicators/housing";
 import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
 import { pageMetadata } from "@/lib/seo";
@@ -53,6 +54,8 @@ export default async function HousingPage() {
           />
         ))}
       </section>
+
+      <PlannedNext domain="housing" />
     </div>
   );
 }
