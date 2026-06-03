@@ -1,5 +1,13 @@
 import Link from "next/link";
 import { DomainNav } from "@/components/DomainNav";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "About — methodology, ministry coverage, limitations",
+  description:
+    "Why NL Performance exists, how we source and update every indicator, which ministries we cover today and which come next, and what we don't yet attempt.",
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
@@ -9,9 +17,9 @@ export default function AboutPage() {
       <header className="space-y-3">
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">About</h1>
         <p className="text-[var(--color-muted)] leading-relaxed">
-          NL Performance is an independent prototype that brings together — in one cockpit —
-          the factual data describing how the Netherlands is doing and the public goals that
-          governments at every level have committed to.
+          NL Performance brings together — in one cockpit — the factual data describing how
+          the Netherlands is doing and the public goals that governments at every level have
+          committed to.
         </p>
       </header>
 
@@ -35,11 +43,12 @@ export default function AboutPage() {
             </Link>{" "}
             for the full list.
           </li>
-          <li>Indicators are fetched at request time and cached for 6 hours.</li>
+          <li>Indicators are fetched at request time and cached for 6 hours (24 h for annual series).</li>
           <li>
             Year-on-year deltas compare the latest observation to the closest observation
             ~12 months earlier; for count and currency units the headline change is the
-            percent change of that pair.
+            percent change of that pair. (A precise-frequency variant — exactly T-12m / T-4q /
+            T-1y — is on the next-iteration backlog.)
           </li>
           <li>
             Goal progress is shown as <code>current ÷ target</code>. For non-linear targets
@@ -112,14 +121,17 @@ export default function AboutPage() {
 
       <Section title="Limitations">
         <ul className="list-disc pl-6 space-y-1.5">
-          <li>This is an early prototype: two domains live (Economy, Housing).</li>
+          <li>
+            Five of the six planned domains are live (Economy, Housing, Climate, Social,
+            Education); Health is still a placeholder in the nav.
+          </li>
           <li>
             Provincial and municipal goals are not yet covered; multiple federal goals are
             tracked without a live counterpart yet (see{" "}
             <Link href="/goals" className="underline hover:text-[var(--color-fg)]">/goals</Link>).
           </li>
           <li>
-            Some illustrative seed values are flagged on individual goal cards and will be
+            A handful of illustrative seed values remain on individual goal cards and will be
             replaced with sourced figures.
           </li>
           <li>

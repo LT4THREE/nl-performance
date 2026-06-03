@@ -2,8 +2,16 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { economyIndicators } from "@/data/indicators/economy";
 import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 21600;
+
+export const metadata = pageMetadata({
+  title: "Dutch economy — live indicators from CBS and ECB",
+  description:
+    "Unemployment, inflation, government debt and the ECB policy rate — the live macro snapshot of the Netherlands, sourced from CBS and the ECB.",
+  path: "/economy",
+});
 
 export default async function EconomyPage() {
   const cards = await Promise.all(

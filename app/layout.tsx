@@ -14,9 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NL Performance — Government accountability cockpit",
+  metadataBase: new URL("https://nl-performance-two.vercel.app"),
+  title: {
+    default: "NL Performance — Track the Netherlands' goals vs. actuals",
+    template: "%s · NL Performance",
+  },
   description:
-    "A central cockpit for tracking the Netherlands' factual indicators and how the government performs against its stated goals.",
+    "Live, sourced indicators from CBS, ECB and Eurostat, tracked against the public goals federal, provincial and municipal governments have committed to.",
 };
 
 export default function RootLayout({

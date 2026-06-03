@@ -4,8 +4,16 @@ import { KpiCard } from "@/components/KpiCard";
 import { economyIndicators } from "@/data/indicators/economy";
 import { housingIndicators } from "@/data/indicators/housing";
 import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 21600;
+
+export const metadata = pageMetadata({
+  title: "NL Performance — Track the Netherlands' goals vs. actuals",
+  description:
+    "How is the Netherlands doing — and how are its governments delivering on what they promised? Live indicators from CBS, ECB and Eurostat alongside the goals in the 2026 coalition agreement, the Klimaatwet, and ministry plans.",
+  path: "/",
+});
 
 export default async function Home() {
   // Curated featured set: one each from unemployment, inflation, house prices,
@@ -40,7 +48,7 @@ export default async function Home() {
         <p className="text-lg text-[var(--color-muted)] leading-relaxed">
           A single, transparent view of factual indicators about the country alongside the
           public goals that federal, provincial, and municipal governments have committed to —
-          and how they are actually delivering against them.
+          and how they are delivering against them.
         </p>
         <div className="flex flex-wrap gap-3 pt-2">
           <Link

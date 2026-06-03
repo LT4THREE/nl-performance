@@ -11,11 +11,31 @@ import { fetchCbsTableInfo } from "@/lib/providers/cbs";
 import { getGoalsByDomain } from "@/lib/goals";
 import { formatValue, formatDelta } from "@/lib/format";
 import { filterByRange, normalizeRange } from "@/lib/range";
+import { indicatorMetadata } from "@/lib/seo";
+import type { Metadata } from "next";
 
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
   return socialIndicators.map((i) => ({ indicator: i.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ indicator: string }>;
+}): Promise<Metadata> {
+  const { indicator: id } = await params;
+  const indicator = findSocialIndicator(id);
+  if (!indicator) return { title: "Indicator not found" };
+  try {
+    const points = await fetchIndicatorSeries(indicator);
+    const { latest, yoyDelta, yoyDeltaPct } = summarize(points);
+    const isRelative = indicator.unit === "percent" || indicator.unit === "index";
+    return indicatorMetadata(indicator, latest, isRelative ? yoyDelta : yoyDeltaPct, `/social/${id}`);
+  } catch {
+    return indicatorMetadata(indicator, null, null, `/social/${id}`);
+  }
 }
 
 export default async function SocialIndicatorPage({

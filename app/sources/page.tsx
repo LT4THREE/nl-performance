@@ -1,4 +1,5 @@
 import { DomainNav } from "@/components/DomainNav";
+import { pageMetadata } from "@/lib/seo";
 import { economyIndicators } from "@/data/indicators/economy";
 import { housingIndicators } from "@/data/indicators/housing";
 import { climateIndicators } from "@/data/indicators/climate";
@@ -7,9 +8,17 @@ import { educationIndicators } from "@/data/indicators/education";
 import { getAllGoals } from "@/lib/goals";
 import { fetchCbsTableInfo } from "@/lib/providers/cbs";
 import { providerLabel, sourceCitationUrl, sourceIdentifier } from "@/lib/indicators";
+import { formatCbsEnum, cbsEnumKind } from "@/lib/cbs-labels";
 import type { IndicatorDef } from "@/types";
 
 export const revalidate = 86400;
+
+export const metadata = pageMetadata({
+  title: "Sources — every dataset, provider, and source document",
+  description:
+    "Every CBS / ECB / Eurostat series we currently query, the goal source documents, and the canonical source map for each policy topic (CBS, CPB, DUO, RIVM, PBL, Kadaster, SCP, Rijksfinanciën, OECD, NATO).",
+  path: "/sources",
+});
 
 type LiveSource = {
   indicator: IndicatorDef;
@@ -17,6 +26,7 @@ type LiveSource = {
   period: string;
   frequency: string;
   status: string;
+  statusKind: "active" | "warning" | "neutral";
 };
 
 async function loadLiveSources(): Promise<LiveSource[]> {
@@ -34,12 +44,14 @@ async function loadLiveSources(): Promise<LiveSource[]> {
       if (indicator.provider === "cbs") {
         try {
           const info = await fetchCbsTableInfo(indicator.cbsTable);
+          const rawStatus = info.ReasonDelivery ?? "Actief";
           return {
             indicator,
             title: info.Title ?? info.ShortTitle ?? indicator.cbsTable,
             period: info.Period ?? "—",
-            frequency: info.Frequency ?? "—",
-            status: info.ReasonDelivery ?? "Actief",
+            frequency: formatCbsEnum(info.Frequency),
+            status: formatCbsEnum(rawStatus),
+            statusKind: cbsEnumKind(rawStatus),
           };
         } catch {
           return {
@@ -48,6 +60,7 @@ async function loadLiveSources(): Promise<LiveSource[]> {
             period: "—",
             frequency: "—",
             status: "Unavailable",
+            statusKind: "warning",
           };
         }
       }
@@ -62,6 +75,7 @@ async function loadLiveSources(): Promise<LiveSource[]> {
               ? "Monthly"
               : "—",
           status: "Active",
+          statusKind: "active",
         };
       }
       return {
@@ -70,6 +84,7 @@ async function loadLiveSources(): Promise<LiveSource[]> {
         period: "Live",
         frequency: "Annual or monthly",
         status: "Active",
+        statusKind: "active",
       };
     }),
   );
@@ -147,9 +162,11 @@ export default async function SourcesPage() {
                     <span
                       className={[
                         "inline-block px-2 py-0.5 rounded-md text-xs font-medium",
-                        s.status.toLowerCase().includes("stopgezet")
+                        s.statusKind === "warning"
                           ? "bg-[var(--color-warning-soft)] text-[var(--color-warning)]"
-                          : "bg-[var(--color-success-soft)] text-[var(--color-success)]",
+                          : s.statusKind === "active"
+                            ? "bg-[var(--color-success-soft)] text-[var(--color-success)]"
+                            : "bg-[var(--color-surface-strong)] text-[var(--color-muted)]",
                       ].join(" ")}
                     >
                       {s.status}

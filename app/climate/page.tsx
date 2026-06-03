@@ -2,8 +2,16 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { climateIndicators } from "@/data/indicators/climate";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86400;
+
+export const metadata = pageMetadata({
+  title: "Dutch climate — greenhouse-gas emissions vs the Klimaatwet target",
+  description:
+    "Greenhouse-gas emissions of the Netherlands tracked against the Klimaatwet -55% target by 2030. Sourced from Eurostat env_air_gge; RIVM and PBL coming.",
+  path: "/climate",
+});
 
 export default async function ClimatePage() {
   const cards = await Promise.all(

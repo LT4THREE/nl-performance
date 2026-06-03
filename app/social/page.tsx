@@ -2,8 +2,16 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { socialIndicators } from "@/data/indicators/social";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86400;
+
+export const metadata = pageMetadata({
+  title: "Social indicators — population, longevity, healthy life years",
+  description:
+    "Total population, life expectancy at birth and healthy life expectancy of the Netherlands — the 'here and now' Monitor Brede Welvaart headline indicators, sourced from CBS.",
+  path: "/social",
+});
 
 export default async function SocialPage() {
   const cards = await Promise.all(

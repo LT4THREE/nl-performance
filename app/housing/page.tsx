@@ -2,8 +2,16 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { housingIndicators } from "@/data/indicators/housing";
 import { fetchIndicatorSeries, summarize } from "@/lib/cbs";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 21600;
+
+export const metadata = pageMetadata({
+  title: "Dutch housing — prices, transactions, stock",
+  description:
+    "Average sale prices, year-on-year change, monthly transactions and total stock of Dutch housing. Live data from CBS / Kadaster, tracked against the 2026 coalition target of ~100,000 net new homes per year.",
+  path: "/housing",
+});
 
 export default async function HousingPage() {
   const cards = await Promise.all(

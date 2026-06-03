@@ -2,8 +2,16 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { educationIndicators } from "@/data/indicators/education";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86400;
+
+export const metadata = pageMetadata({
+  title: "Dutch education — government spending vs the €1.5B coalition pledge",
+  description:
+    "Government spending on education as a share of GDP and in absolute euros, sourced from CBS. Tracked against the 2026 coalition's €1.5B additional structural-investment commitment.",
+  path: "/education",
+});
 
 export default async function EducationPage() {
   const cards = await Promise.all(

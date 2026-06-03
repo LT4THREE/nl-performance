@@ -2,7 +2,15 @@ import { DomainNav } from "@/components/DomainNav";
 import { GoalCard } from "@/components/GoalCard";
 import { GoalFilters } from "@/components/GoalFilters";
 import { filterGoals, getAllGoals } from "@/lib/goals";
+import { pageMetadata } from "@/lib/seo";
 import type { Domain, GoalLevel, GoalStatus } from "@/types";
+
+export const metadata = pageMetadata({
+  title: "Goals — government commitments tracked vs. actuals",
+  description:
+    "Public commitments made by Dutch governments — the 2026 coalition agreement, the Klimaatwet, defense, education, nitrogen — tracked against their stated targets. Filterable by level, domain and status.",
+  path: "/goals",
+});
 
 function normLevel(v: string | undefined): GoalLevel | "all" {
   if (v === "federal" || v === "provincial" || v === "municipal") return v;
