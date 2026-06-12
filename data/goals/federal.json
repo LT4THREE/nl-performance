@@ -16,7 +16,8 @@
       "sourceUrl": "https://www.cbs.nl/nl-nl/cijfers/detail/83704NED"
     },
     "status": "behind",
-    "notes": "Current value is an illustrative estimate of recent net additions to the housing stock pending verification against CBS 83704NED year-on-year change. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities."
+    "notes": "Current value is an illustrative estimate of recent net additions to the housing stock pending verification against CBS 83704NED year-on-year change. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
+    "indicatorIds": ["housing-stock"]
   },
   {
     "id": "defense-3p5pct-nato",
@@ -67,7 +68,8 @@
       "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/env_air_gge/default/table"
     },
     "status": "behind",
-    "notes": "Current value computed from Eurostat env_air_gge total GHG emissions (excluding LULUCF and memo items): 146,441 kt CO₂eq in 2023 vs 228,103 kt in 1990. Statutory target carried over by the 2026 coalition; emission figures also published by RIVM/Emissieregistratie."
+    "notes": "Current value computed from Eurostat env_air_gge total GHG emissions (excluding LULUCF and memo items): 146,441 kt CO₂eq in 2023 vs 228,103 kt in 1990. Statutory target carried over by the 2026 coalition; emission figures also published by RIVM/Emissieregistratie.",
+    "indicatorIds": ["ghg-emissions-vs-1990", "ghg-emissions-total"]
   },
   {
     "id": "nitrogen-reduction-2035",
@@ -93,6 +95,7 @@
     },
     "target": { "value": 1.5, "unit": "€ billion/year", "deadline": "2030-12-31" },
     "status": "unknown",
-    "notes": "Focus on basic literacy/numeracy, civic education, digital skills, and equality of opportunity."
+    "notes": "Focus on basic literacy/numeracy, civic education, digital skills, and equality of opportunity.",
+    "indicatorIds": ["education-spending-gdp", "education-spending-total"]
   }
 ]

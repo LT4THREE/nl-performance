@@ -96,4 +96,12 @@ export type Goal = {
   };
   status: GoalStatus;
   notes?: string;
+  /**
+   * Indicator IDs whose measurement is the direct metric of this goal.
+   * When present, the goal is only shown as 'Related' on those indicator
+   * detail pages — not on every indicator in the same domain. Omit or
+   * leave empty when no live indicator exists yet; the goal still appears
+   * on /goals regardless.
+   */
+  indicatorIds?: string[];
 };

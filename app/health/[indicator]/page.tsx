@@ -9,7 +9,7 @@ import { RangeSelector } from "@/components/RangeSelector";
 import { healthIndicators, findHealthIndicator } from "@/data/indicators/health";
 import { fetchIndicatorSeries, summarize } from "@/lib/indicators";
 import { fetchCbsTableInfo } from "@/lib/providers/cbs";
-import { getGoalsByDomain } from "@/lib/goals";
+import { getGoalsForIndicator } from "@/lib/goals";
 import { formatValue, formatDelta, formatPeriod } from "@/lib/format";
 import { SchemaOrgDataset } from "@/components/SchemaOrgDataset";
 import { filterByRange, normalizeRange } from "@/lib/range";
@@ -69,7 +69,7 @@ export default async function HealthIndicatorPage({
   const isRelativeUnit = indicator.unit === "percent" || indicator.unit === "index";
   const displayDelta = isRelativeUnit ? yoyDelta : yoyDeltaPct;
   const filtered = filterByRange(points, range);
-  const relatedGoals = getGoalsByDomain(indicator.domain);
+  const relatedGoals = getGoalsForIndicator(indicator.id);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-10 space-y-10">

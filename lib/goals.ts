@@ -27,6 +27,7 @@ const GoalSchema: z.ZodType<Goal> = z.object({
     .optional(),
   status: z.enum(["on-track", "behind", "met", "missed", "unknown"]),
   notes: z.string().optional(),
+  indicatorIds: z.array(z.string()).optional(),
 });
 
 const GoalsSchema = z.array(GoalSchema);
@@ -37,6 +38,19 @@ export function getAllGoals(): Goal[] {
 
 export function getGoalsByDomain(domain: Goal["domain"]): Goal[] {
   return getAllGoals().filter((g) => g.domain === domain);
+}
+
+/**
+ * Goals whose explicit indicatorIds list includes this indicator. Used on
+ * indicator detail pages so the 'Related government goals' section only
+ * appears when the goal's measurement is what the page shows. A goal that
+ * lists no indicatorIds (no live counterpart yet) is excluded from every
+ * detail page; it still shows on /goals.
+ */
+export function getGoalsForIndicator(indicatorId: string): Goal[] {
+  return getAllGoals().filter(
+    (g) => Array.isArray(g.indicatorIds) && g.indicatorIds.includes(indicatorId),
+  );
 }
 
 /**
