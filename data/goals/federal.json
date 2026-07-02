@@ -10,13 +10,13 @@
     },
     "target": { "value": 100000, "unit": "dwellings/year", "deadline": "2030-12-31" },
     "current": {
-      "value": 82204,
+      "value": 79910,
       "unit": "dwellings/year",
-      "asOf": "2024-12-31",
+      "asOf": "2025-12-31",
       "sourceUrl": "https://opendata.cbs.nl/statline/#/CBS/nl/dataset/82235NED/table"
     },
     "status": "behind",
-    "notes": "Current value is gross new dwellings added in 2024 from CBS 82235NED (Woningbouw_5): 82,204 including new construction and conversions. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
+    "notes": "Current value is gross new dwellings added in 2025 from CBS 82235NED (Woningbouw_5): 79,910 including new construction and conversions. Down from 82,204 in 2024 and 87,833 in 2023. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
     "indicatorIds": ["new-dwellings-added", "housing-stock"]
   },
   {

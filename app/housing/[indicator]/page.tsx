@@ -11,6 +11,7 @@ import { fetchCbsTableInfo } from "@/lib/providers/cbs";
 import { getGoalsForIndicator } from "@/lib/goals";
 import { formatValue, formatDelta, formatPeriod } from "@/lib/format";
 import { SchemaOrgDataset } from "@/components/SchemaOrgDataset";
+import { EvidenceExplorer } from "@/components/EvidenceExplorer";
 import { filterByRange, normalizeRange } from "@/lib/range";
 import { indicatorMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
@@ -146,6 +147,8 @@ export default async function HousingIndicatorPage({
           </div>
         </section>
       )}
+
+      <EvidenceExplorer indicator={indicator} />
     </div>
   );
 }
