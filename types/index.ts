@@ -248,6 +248,15 @@ export type Commitment = {
   /** Analyst assessment of whether the outcome is trending to target. */
   outcomeStatus: GoalStatus;
   notes?: string;
+  /**
+   * Set to true when the political attribution (specific cabinet name,
+   * verbatim quote text, or source URL) has NOT been independently
+   * verified from primary Dutch government records. The UI renders a
+   * clear DEMO badge so this is never mistaken for confirmed history.
+   * Live CBS/ECB/Eurostat numbers stay real regardless — the flag is
+   * only about the political framing around them.
+   */
+  isDemo?: boolean;
 };
 
 export type Goal = {

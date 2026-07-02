@@ -31,14 +31,14 @@ export const housingIndicators: IndicatorDef[] = [
       "Kadaster occasionally back-revises early months when transaction registrations arrive late. Revisions are typically <1% on the most recent 2-3 months and negligible beyond that.",
     relatedLegislation: [
       {
-        name: "Wet betaalbare huur",
-        url: "https://wetten.overheid.nl/BWBR0050203/",
-        role: "Regulates mid-market rent caps (huurpuntenstelsel) from 1 July 2024; affects the buy-vs-rent choice, indirectly shaping owner-occupied demand.",
+        name: "Wet betaalbare huur (BWBR identifier pending verification)",
+        url: "https://wetten.overheid.nl/",
+        role: "Mid-market rent regulation; affects the buy-vs-rent choice, indirectly shaping owner-occupied demand. Specific BWBR identifier and enactment date not independently re-verified in this build.",
       },
       {
         name: "Wet inkomstenbelasting 2001 (hypotheekrenteaftrek)",
-        url: "https://wetten.overheid.nl/BWBR0011353/",
-        role: "The mortgage-interest deduction, a long-standing structural driver of Dutch house prices; being phased down over the 2020s.",
+        url: "https://wetten.overheid.nl/",
+        role: "The mortgage-interest deduction, a long-standing structural driver of Dutch house prices; treatment has been adjusted over the 2020s. Specific BWBR identifier not independently re-verified in this build.",
       },
     ],
   },
@@ -148,9 +148,9 @@ export const housingIndicators: IndicatorDef[] = [
       "Since 2015, gross additions have averaged around 75,000/year, peaking near 90,000 in 2022-2023 and falling back to 82,204 in 2024 as high interest rates slowed construction starts. Each successive political commitment (Rutte-IV 100k/yr, then 2026 D66/VVD/CDA 100k/yr) has been set roughly 20-25% above the observed pace.",
     relatedLegislation: [
       {
-        name: "Wet regie volkshuisvesting",
-        url: "https://wetten.overheid.nl/BWBR0050206/",
-        role: "The 2024 law giving the Minister of Volkshuisvesting authority to direct provinces and municipalities on new-build targets and land use. Underpins the enforceability of the 100k/year commitment.",
+        name: "Wet regie volkshuisvesting (identifier pending verification)",
+        url: "https://wetten.overheid.nl/",
+        role: "Discussed as the statutory backbone giving national government authority to direct provincial and municipal housing targets. Specific BWBR identifier and current enacted status have not been independently re-verified in this build.",
       },
     ],
   },

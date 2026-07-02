@@ -57,6 +57,7 @@ const CommitmentSchema: z.ZodType<Commitment> = z.object({
   ]),
   outcomeStatus: z.enum(["on-track", "behind", "met", "missed", "unknown"]),
   notes: z.string().optional(),
+  isDemo: z.boolean().optional(),
 });
 
 const CommitmentsSchema = z.array(CommitmentSchema);

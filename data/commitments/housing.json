@@ -1,59 +1,40 @@
 [
   {
-    "id": "coalition-2026-housing-100k",
-    "title": "Structural 100,000 new dwellings per year",
-    "exactPromiseText": "Het kabinet werkt structureel toe naar zo'n 100.000 nieuwe woningen per jaar en trekt daar vanaf 2029 jaarlijks één miljard euro voor uit. Er komen 30 plekken voor nieuwe wijken of steden.",
+    "id": "public-100k-housing-target",
+    "title": "Widely-discussed public target: ~100,000 new dwellings per year",
+    "exactPromiseText": "A ~100,000 new dwellings per year headline target has been used in Dutch housing policy since the Hugo de Jonge era. Its exact wording and enforcement mechanism differ across coalition programmes; the number itself is the shared reference point.",
     "type": "coalition_agreement",
     "level": "federal",
-    "owner": "Kabinet-Schoof-II (D66/VVD/CDA), 2026",
-    "yearMade": 2026,
+    "owner": "Recent Dutch coalition programmes (specific attribution demo — verification pending)",
+    "yearMade": 2022,
     "topicIds": ["housing"],
     "source": {
-      "document": "Coalitieakkoord 2026-2030 'Aan de slag — Bouwen aan een beter Nederland'",
-      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
+      "document": "Cabinet housing programme (specific document reference pending verification)"
     },
     "target": { "value": 100000, "unit": "dwellings/year", "deadline": "2030-12-31" },
     "indicatorIds": ["new-dwellings-added", "housing-stock"],
-    "governmentActionStatus": "announced",
+    "governmentActionStatus": "implementation_underway",
     "outcomeStatus": "behind",
-    "notes": "The 2026 coalition inherits the 100k/year target from the outgoing Rutte-IV Woningbouwimpuls. €1B/year additional federal funding is committed from 2029 onwards. Live measurement (new-dwellings-added) shows 79,910 in 2025 — 20% below the target."
+    "notes": "The 100k/year target is genuinely referenced across Dutch housing policy. What we have NOT independently verified for this build: the specific cabinet name owning the current version, the URL of the current coalition programme, and the exact verbatim wording of the current commitment. CBS 82235NED delivers the actual measurement (79,910 in 2025).",
+    "isDemo": true
   },
   {
-    "id": "coalition-2026-30-new-neighbourhoods",
-    "title": "30 designated new neighbourhoods or towns",
-    "exactPromiseText": "Er komen 30 plekken voor nieuwe wijken of steden.",
-    "type": "coalition_agreement",
-    "level": "federal",
-    "owner": "Kabinet-Schoof-II (D66/VVD/CDA), 2026",
-    "yearMade": 2026,
-    "topicIds": ["housing"],
-    "source": {
-      "document": "Coalitieakkoord 2026-2030 'Aan de slag — Bouwen aan een beter Nederland'",
-      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
-    },
-    "target": { "value": 30, "unit": "designated sites", "deadline": "2030-12-31" },
-    "indicatorIds": [],
-    "governmentActionStatus": "announced",
-    "outcomeStatus": "unknown",
-    "notes": "No live counterpart indicator yet — will need a curated list of designated sites once the ministry publishes one. Update planned once the Nota Ruimte / Ministeriële Regeling Grootschalige Woningbouwlocaties is published under the new cabinet."
-  },
-  {
-    "id": "wet-regie-volkshuisvesting-2024",
-    "title": "Central direction of provincial housing targets",
-    "exactPromiseText": "De Minister van Volkshuisvesting krijgt de bevoegdheid om provinciale woningbouwaantallen bindend vast te stellen en gemeenten aan te wijzen waar gebouwd moet worden.",
+    "id": "housing-central-direction-law",
+    "title": "Legal framework: central direction of provincial housing targets",
+    "exactPromiseText": "Dutch housing legislation (naming and specific enactment date pending verification) gives the responsible minister authority to set provincial housing targets and designate local build sites, turning the headline 100k/year figure into an enforceable instrument.",
     "type": "statutory_law",
     "level": "federal",
-    "owner": "Wet regie volkshuisvesting (2024)",
+    "owner": "Dutch statutory framework (specific act pending verification)",
     "yearMade": 2024,
     "topicIds": ["housing"],
     "source": {
-      "document": "Wet regie volkshuisvesting",
-      "url": "https://wetten.overheid.nl/BWBR0050206/"
+      "document": "Wet regie volkshuisvesting (identifier pending verification against wetten.overheid.nl)"
     },
     "target": { "value": 100000, "unit": "dwellings/year enforceable", "deadline": "2030-12-31" },
     "indicatorIds": ["new-dwellings-added"],
     "governmentActionStatus": "legislation_passed",
     "outcomeStatus": "behind",
-    "notes": "The statutory backbone for the 100k/year target: turns the coalition commitment into an enforceable instrument. Passed under the previous cabinet, retained by the 2026 coalition."
+    "notes": "A statute of this name has been publicly discussed. Its exact wetten.overheid.nl identifier and current enacted status have not been re-verified in this build. Once verified, the demo flag drops and we cite the confirmed BWBR ID and enactment date.",
+    "isDemo": true
   }
 ]

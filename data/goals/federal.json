@@ -1,12 +1,11 @@
 [
   {
     "id": "housing-100k-2030",
-    "title": "Build ~100,000 new homes per year",
+    "title": "Build ~100,000 new homes per year (public target across recent coalition programmes)",
     "level": "federal",
     "domain": "housing",
     "source": {
-      "document": "Coalition agreement 2026–2030 'Aan de slag — Bouwen aan een beter Nederland' (D66/VVD/CDA, 30 Jan 2026)",
-      "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
+      "document": "Widely-referenced Dutch housing target — specific cabinet attribution and current programme URL demo/pending verification"
     },
     "target": { "value": 100000, "unit": "dwellings/year", "deadline": "2030-12-31" },
     "current": {
@@ -16,7 +15,7 @@
       "sourceUrl": "https://opendata.cbs.nl/statline/#/CBS/nl/dataset/82235NED/table"
     },
     "status": "behind",
-    "notes": "Current value is gross new dwellings added in 2025 from CBS 82235NED (Woningbouw_5): 79,910 including new construction and conversions. Down from 82,204 in 2024 and 87,833 in 2023. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
+    "notes": "Current value is verified live from CBS 82235NED (Woningbouw_5): 79,910 gross dwellings added in 2025 (new construction + conversions), down from 82,204 in 2024 and 87,833 in 2023. The 100,000/year target itself is widely used in Dutch housing policy discussion; the specific current coalition programme text and URL have not been independently re-verified for this build.",
     "indicatorIds": ["new-dwellings-added", "housing-stock"]
   },
   {

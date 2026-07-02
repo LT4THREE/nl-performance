@@ -37,6 +37,17 @@ const outcomePillClasses: Record<Commitment["outcomeStatus"], string> = {
 
 const actionPillClasses = "bg-[var(--color-accent-soft)] text-[var(--color-accent-strong)]";
 
+function DemoBadge() {
+  return (
+    <span
+      className="inline-block px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wide bg-[var(--color-watch-soft)] text-[var(--color-watch)] border border-[var(--color-watch)]/20"
+      title="Political attribution / source URL not independently re-verified in this build. CBS/ECB/Eurostat measurements remain live."
+    >
+      Demo
+    </span>
+  );
+}
+
 export function CommitmentCard({ commitment }: { commitment: Commitment }) {
   const c = commitment;
   return (
@@ -46,11 +57,14 @@ export function CommitmentCard({ commitment }: { commitment: Commitment }) {
           <span className="text-xs uppercase tracking-wide text-[var(--color-muted)] font-medium">
             {commitmentTypeLabel[c.type]} · {c.yearMade}
           </span>
-          <span
-            className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${outcomePillClasses[c.outcomeStatus]}`}
-          >
-            Outcome: {outcomeStatusLabel[c.outcomeStatus]}
-          </span>
+          <div className="flex items-center gap-2">
+            {c.isDemo && <DemoBadge />}
+            <span
+              className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${outcomePillClasses[c.outcomeStatus]}`}
+            >
+              Outcome: {outcomeStatusLabel[c.outcomeStatus]}
+            </span>
+          </div>
         </div>
         <h3 className="text-base font-semibold text-[var(--color-fg)] leading-snug">
           {c.title}

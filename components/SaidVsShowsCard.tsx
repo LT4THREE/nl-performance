@@ -21,11 +21,19 @@ export function SaidVsShowsCard({ item }: { item: SaidVsShows }) {
       <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[var(--color-border)]">
         {/* SAID */}
         <div className="p-6 space-y-3">
-          <header className="flex items-baseline gap-2">
+          <header className="flex items-baseline gap-2 flex-wrap">
             <span className="text-xs uppercase tracking-wide font-semibold text-[var(--color-fg-secondary)]">
               Government said
             </span>
             <span className="text-xs text-[var(--color-muted)]">· {date}</span>
+            {item.isDemo && (
+              <span
+                className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide bg-[var(--color-watch-soft)] text-[var(--color-watch)]"
+                title="Attribution and verbatim wording not independently re-verified. The 'Data shows' side is real CBS data."
+              >
+                Demo
+              </span>
+            )}
           </header>
           <blockquote className="text-[var(--color-fg)] leading-relaxed italic text-[15px]">
             &ldquo;{item.said.quote}&rdquo;

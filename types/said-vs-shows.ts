@@ -31,4 +31,10 @@ export type SaidVsShows = {
   };
   /** Neutral one-sentence framing: how do the two relate? */
   synthesis: string;
+  /**
+   * Set to true when the 'said' quotation, attribution, or source URL has
+   * NOT been independently verified. UI shows a clear DEMO badge. The
+   * 'shows' side (real CBS/ECB/Eurostat numbers) is always real.
+   */
+  isDemo?: boolean;
 };

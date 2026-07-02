@@ -38,6 +38,7 @@ const SaidVsShowsSchema: z.ZodType<SaidVsShows> = z.object({
     dataSourceUrl: z.string().url(),
   }),
   synthesis: z.string(),
+  isDemo: z.boolean().optional(),
 });
 
 const AllSchema = z.array(SaidVsShowsSchema);
