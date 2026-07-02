@@ -70,7 +70,7 @@ export default async function TopicPage({
   const uncategorised = rows.filter((r) => !r.indicator.metricType);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10 space-y-12">
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-12">
       <DomainNav active="topics" />
 
       <div className="text-sm text-[var(--color-muted)]">
@@ -90,7 +90,7 @@ export default async function TopicPage({
         </p>
       </header>
 
-      <section className="grid md:grid-cols-2 gap-6">
+      <section aria-label="Topic context" className="grid md:grid-cols-2 gap-4 sm:gap-6">
         <FactBlock
           heading="Ministries and bodies"
           body={
@@ -142,9 +142,11 @@ export default async function TopicPage({
       )}
 
       {saidVsShows.length > 0 && (
-        <section className="space-y-3">
+        <section aria-labelledby="said-vs-shows-heading" className="space-y-3">
           <header>
-            <h2 className="text-xl font-semibold">Government said · Data shows</h2>
+            <h2 id="said-vs-shows-heading" className="text-xl font-semibold">
+              Government said · Data shows
+            </h2>
             <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
               A curated pairing of a specific government statement with the measured outcome
               from the same time window. Factual, sourced, non-sarcastic.
@@ -159,9 +161,11 @@ export default async function TopicPage({
       )}
 
       {commitments.length > 0 && (
-        <section className="space-y-3">
+        <section aria-labelledby="commitments-heading" className="space-y-3">
           <header>
-            <h2 className="text-xl font-semibold">Government commitments</h2>
+            <h2 id="commitments-heading" className="text-xl font-semibold">
+              Government commitments
+            </h2>
             <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
               Public commitments — coalition agreements, statutory laws, international
               obligations. Each shows the promise text, target, delivery status, and outcome
@@ -177,9 +181,11 @@ export default async function TopicPage({
       )}
 
       {goals.length > 0 && commitments.length === 0 && (
-        <section className="space-y-3">
+        <section aria-labelledby="goals-heading" className="space-y-3">
           <header>
-            <h2 className="text-xl font-semibold">Government goals</h2>
+            <h2 id="goals-heading" className="text-xl font-semibold">
+              Government goals
+            </h2>
             <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
               Public goals tracked against this topic. Richer commitment cards will replace
               these as we curate them per topic.
@@ -224,10 +230,13 @@ function MetricSection({
   }[];
 }) {
   if (rows.length === 0) return null;
+  const headingId = `metrics-${title.toLowerCase()}`;
   return (
-    <section className="space-y-3">
+    <section aria-labelledby={headingId} className="space-y-3">
       <header>
-        <h2 className="text-xl font-semibold">{title}</h2>
+        <h2 id={headingId} className="text-xl font-semibold">
+          {title}
+        </h2>
         <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">{subtitle}</p>
       </header>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

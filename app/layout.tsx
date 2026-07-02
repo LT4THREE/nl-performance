@@ -31,27 +31,39 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-3 focus:py-2 focus:rounded-md focus:bg-[var(--color-accent)] focus:text-[var(--color-accent-fg)] focus:text-sm focus:font-medium"
+        >
+          Skip to content
+        </a>
         <header className="border-b border-[var(--color-border)]">
-          <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between gap-6">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
             <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-              <span className="inline-block w-2.5 h-2.5 rounded-full bg-[var(--color-accent)]" />
+              <span
+                className="inline-block w-2.5 h-2.5 rounded-full bg-[var(--color-accent)]"
+                aria-hidden="true"
+              />
               NL Performance
             </Link>
             <p className="text-xs text-[var(--color-muted)] hidden sm:block">
-              Tracking the Netherlands · prototype
+              Government performance, measured
             </p>
           </div>
         </header>
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <footer className="border-t border-[var(--color-border)] mt-16">
-          <div className="mx-auto max-w-6xl px-6 py-8 text-xs text-[var(--color-muted)] flex flex-col sm:flex-row gap-3 sm:justify-between">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 text-xs text-[var(--color-muted)] flex flex-col sm:flex-row gap-3 sm:justify-between">
             <p>
-              Data: Centraal Bureau voor de Statistiek (CBS), under CC-BY. This site is an
-              independent prototype, not affiliated with the Dutch government.
+              Data: CBS, ECB, Eurostat (under their respective open-data licences). This site
+              is an independent evidence platform, not affiliated with the Dutch government or
+              any political party.
             </p>
             <p>
               <Link href="/about" className="underline hover:text-[var(--color-fg)]">
-                About & methodology
+                About &amp; methodology
               </Link>
             </p>
           </div>
