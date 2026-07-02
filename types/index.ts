@@ -123,6 +123,34 @@ type IndicatorBase = {
   whyItMatters?: string;
   /** Source-type tag, used to separate statistics from communication. */
   sourceType?: SourceType;
+  /**
+   * Full plain-English methodology: how the series is constructed, what
+   * exactly is being counted, what population is covered, what treatment
+   * (e.g. seasonal adjustment) is applied. Rendered on the Evidence Explorer.
+   */
+  methodology?: string;
+  /**
+   * Notes on any known publication revisions, methodology breaks, or
+   * discontinuities in the series. Optional but critical for macro data.
+   */
+  revisionNotes?: string;
+  /**
+   * One-paragraph historical context — where the series sits in a longer
+   * story about the topic. Rendered above the chart on the Evidence Explorer.
+   */
+  historicalContext?: string;
+  /**
+   * Related pieces of Dutch legislation (laws, regulations) that shape the
+   * metric, with public URLs. Small structured list.
+   */
+  relatedLegislation?: {
+    /** Short human name, e.g. "Klimaatwet" or "Wet betaalbare huur". */
+    name: string;
+    /** Public authoritative URL — wetten.overheid.nl for laws. */
+    url: string;
+    /** One-line role: "Sets the -55% by 2030 statutory target." */
+    role: string;
+  }[];
 };
 
 /** A CBS OData table-backed indicator. */
