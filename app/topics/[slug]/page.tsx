@@ -7,6 +7,7 @@ import { GoalCard } from "@/components/GoalCard";
 import { CommitmentCard } from "@/components/CommitmentCard";
 import { SaidVsShowsCard } from "@/components/SaidVsShowsCard";
 import { VerdictHero } from "@/components/VerdictHero";
+import { VerdictChangeBox } from "@/components/VerdictChangeBox";
 import { topics, findTopic } from "@/data/topics";
 import { indicatorsForTopic } from "@/lib/all-indicators";
 import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
@@ -270,6 +271,8 @@ export default async function TopicPage({
           </div>
         </section>
       )}
+
+      {verdict && <VerdictChangeBox verdict={verdict} />}
 
       {commitments.length > 0 && (
         <section aria-labelledby="commitments-heading" className="space-y-3">
