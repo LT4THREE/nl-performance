@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { GoalCard } from "@/components/GoalCard";
+import { CommitmentCard } from "@/components/CommitmentCard";
 import { topics, findTopic } from "@/data/topics";
 import { indicatorsForTopic } from "@/lib/all-indicators";
 import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
 import { getAllGoals } from "@/lib/goals";
+import { getCommitmentsForTopic } from "@/lib/commitments";
 import { pageMetadata } from "@/lib/seo";
 import type { IndicatorDef, MetricType } from "@/types";
 
@@ -43,6 +45,7 @@ export default async function TopicPage({
 
   const inds = indicatorsForTopic(topic.id);
   const goals = getAllGoals().filter((g) => topic.goalIds.includes(g.id));
+  const commitments = getCommitmentsForTopic(topic.id);
 
   const rows = await Promise.all(
     inds.map(async (indicator) => {
@@ -135,13 +138,31 @@ export default async function TopicPage({
         />
       )}
 
-      {goals.length > 0 && (
+      {commitments.length > 0 && (
         <section className="space-y-3">
           <header>
             <h2 className="text-xl font-semibold">Government commitments</h2>
             <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
-              Public commitments — coalition-agreement targets, statutory laws, or
-              international obligations — measured against this topic.
+              Public commitments — coalition agreements, statutory laws, international
+              obligations. Each shows the promise text, target, delivery status, and outcome
+              status separately.
+            </p>
+          </header>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {commitments.map((c) => (
+              <CommitmentCard key={c.id} commitment={c} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {goals.length > 0 && commitments.length === 0 && (
+        <section className="space-y-3">
+          <header>
+            <h2 className="text-xl font-semibold">Government goals</h2>
+            <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
+              Public goals tracked against this topic. Richer commitment cards will replace
+              these as we curate them per topic.
             </p>
           </header>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

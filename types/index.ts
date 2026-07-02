@@ -190,6 +190,66 @@ export type IndicatorDef = CbsIndicator | EcbIndicator | EurostatIndicator;
 export type GoalLevel = "federal" | "provincial" | "municipal";
 export type GoalStatus = "on-track" | "behind" | "met" | "missed" | "unknown";
 
+/**
+ * Provenance of a public commitment. Coalition agreements bind a specific
+ * cabinet; statutory laws bind the state; election manifestos are the
+ * pre-formation promise. Kept separate because the enforceability differs.
+ */
+export type CommitmentType =
+  | "coalition_agreement"
+  | "statutory_law"
+  | "election_manifesto"
+  | "international_treaty"
+  | "government_program";
+
+/** Delivery status of what the government has actually done. */
+export type GovernmentActionStatus =
+  | "no_action"
+  | "announced"
+  | "legislation_drafted"
+  | "legislation_passed"
+  | "implementation_underway"
+  | "delivered"
+  | "abandoned";
+
+/**
+ * A public commitment made by a Dutch government (or party) with more
+ * structure than the flat Goal type. Cross-references live indicators so
+ * an outcome-vs-target chart can be rendered directly on the commitment
+ * card, and separately tracks whether the government has acted on it.
+ */
+export type Commitment = {
+  id: string;
+  title: string;
+  /** Plain-language target: 'Build ~100,000 new dwellings per year by 2030'. */
+  exactPromiseText: string;
+  type: CommitmentType;
+  level: GoalLevel;
+  /** Cabinet or party that owns this commitment. */
+  owner: string;
+  /** Year the commitment was made (coalition-agreement year, election year, statute year). */
+  yearMade: number;
+  /** Related issue area(s). */
+  topicIds: TopicId[];
+  source: {
+    document: string;
+    url?: string;
+    page?: number;
+  };
+  target: {
+    value: number;
+    unit: string;
+    deadline: string; // ISO date
+  };
+  /** IDs of indicators that measure the outcome of this commitment. */
+  indicatorIds: string[];
+  /** Live delivery status separate from outcome status. */
+  governmentActionStatus: GovernmentActionStatus;
+  /** Analyst assessment of whether the outcome is trending to target. */
+  outcomeStatus: GoalStatus;
+  notes?: string;
+};
+
 export type Goal = {
   id: string;
   title: string;
