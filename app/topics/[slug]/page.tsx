@@ -17,6 +17,41 @@ import { computeHousingVerdict } from "@/lib/verdict";
 import { pageMetadata } from "@/lib/seo";
 import type { IndicatorDef, MetricType } from "@/types";
 
+type DisplayGroup = NonNullable<IndicatorDef["displayGroup"]>;
+
+const DISPLAY_GROUPS: {
+  key: DisplayGroup;
+  title: string;
+  subtitle: string;
+}[] = [
+  {
+    key: "supply",
+    title: "Supply",
+    subtitle: "New dwellings added, total stock. The core of the housing question.",
+  },
+  {
+    key: "affordability",
+    title: "Affordability",
+    subtitle: "Prices and price growth. What buyers face today.",
+  },
+  {
+    key: "market-activity",
+    title: "Market activity",
+    subtitle: "Transaction volume. Leading indicator of market health.",
+  },
+  {
+    key: "government-delivery",
+    title: "Government delivery",
+    subtitle: "What the state has actually delivered against its own commitments.",
+  },
+  {
+    key: "inputs",
+    title: "Inputs & spending",
+    subtitle:
+      "Money and legislation committed. Note: inputs are not outcomes; governments often claim success here.",
+  },
+];
+
 export const revalidate = 21600;
 
 export function generateStaticParams() {
@@ -70,6 +105,18 @@ export default async function TopicPage({
     input: rows.filter((r) => r.indicator.metricType === "input"),
   };
   const uncategorised = rows.filter((r) => !r.indicator.metricType);
+
+  const hasDisplayGroups = rows.some((r) => r.indicator.displayGroup);
+  const byDisplayGroup: Record<DisplayGroup, typeof rows> = {
+    supply: rows.filter((r) => r.indicator.displayGroup === "supply"),
+    affordability: rows.filter((r) => r.indicator.displayGroup === "affordability"),
+    "market-activity": rows.filter((r) => r.indicator.displayGroup === "market-activity"),
+    "government-delivery": rows.filter(
+      (r) => r.indicator.displayGroup === "government-delivery",
+    ),
+    inputs: rows.filter((r) => r.indicator.displayGroup === "inputs"),
+  };
+  const ungrouped = rows.filter((r) => !r.indicator.displayGroup);
 
   // Housing-specific verdict hero: derives status/gap/trend from the live
   // new-dwellings-added series and the 100k target. Only rendered on the
@@ -136,27 +183,49 @@ export default async function TopicPage({
         <EmptyStateSection topic={topic} />
       )}
 
-      <MetricSection
-        title="Outcomes"
-        subtitle="What actually changed in Dutch society."
-        rows={byType.outcome}
-      />
-      <MetricSection
-        title="Outputs"
-        subtitle="What government delivered."
-        rows={byType.output}
-      />
-      <MetricSection
-        title="Inputs"
-        subtitle="What government put in (money, staffing, legislation). Note: not a measure of success on its own."
-        rows={byType.input}
-      />
-      {uncategorised.length > 0 && (
-        <MetricSection
-          title="Other metrics"
-          subtitle="Not yet classified as outcome / output / input."
-          rows={uncategorised}
-        />
+      {hasDisplayGroups ? (
+        <>
+          {DISPLAY_GROUPS.map((g) => (
+            <MetricSection
+              key={g.key}
+              title={g.title}
+              subtitle={g.subtitle}
+              rows={byDisplayGroup[g.key]}
+            />
+          ))}
+          {ungrouped.length > 0 && (
+            <MetricSection
+              title="Other metrics"
+              subtitle="Not yet classified into a display group."
+              rows={ungrouped}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <MetricSection
+            title="Outcomes"
+            subtitle="What actually changed in Dutch society."
+            rows={byType.outcome}
+          />
+          <MetricSection
+            title="Outputs"
+            subtitle="What government delivered."
+            rows={byType.output}
+          />
+          <MetricSection
+            title="Inputs"
+            subtitle="What government put in (money, staffing, legislation). Note: not a measure of success on its own."
+            rows={byType.input}
+          />
+          {uncategorised.length > 0 && (
+            <MetricSection
+              title="Other metrics"
+              subtitle="Not yet classified as outcome / output / input."
+              rows={uncategorised}
+            />
+          )}
+        </>
       )}
 
       {saidVsShows.length > 0 && (

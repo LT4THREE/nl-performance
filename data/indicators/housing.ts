@@ -19,6 +19,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: false,
     topicIds: ["housing"],
     metricType: "outcome",
+    displayGroup: "affordability",
     confidence: "high",
     sourceType: "official_statistics",
     whyItMatters:
@@ -59,6 +60,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: false,
     topicIds: ["housing"],
     metricType: "outcome",
+    displayGroup: "affordability",
     confidence: "high",
     sourceType: "official_statistics",
     whyItMatters:
@@ -85,6 +87,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: true,
     topicIds: ["housing"],
     metricType: "outcome",
+    displayGroup: "market-activity",
     confidence: "high",
     sourceType: "official_statistics",
     whyItMatters:
@@ -112,6 +115,7 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: true,
     topicIds: ["housing"],
     metricType: "outcome",
+    displayGroup: "supply",
     confidence: "high",
     sourceType: "official_statistics",
     whyItMatters:
@@ -138,10 +142,11 @@ export const housingIndicators: IndicatorDef[] = [
     higherIsBetter: true,
     topicIds: ["housing"],
     metricType: "output",
+    displayGroup: "supply",
     confidence: "high",
     sourceType: "official_statistics",
     whyItMatters:
-      "This is the direct measurement of the housing supply the 2026 coalition committed to — 100,000/year by 2030. Gross additions include pure new-build plus conversions from non-housing (e.g. office-to-residential).",
+      "This is the direct measurement of the housing supply the 100,000/year public target refers to. Gross additions include pure new-build plus conversions from non-housing (e.g. office-to-residential).",
     methodology:
       "Sum of (a) new-build dwellings completed (Nieuwbouw) and (b) 'other additions' (OverigeToevoeging) — mostly conversions from non-residential buildings. Reported by CBS from BAG registrations, published annually. Demolitions (Sloop) and correction items are tracked separately in the same table.",
     historicalContext:

@@ -124,6 +124,17 @@ type IndicatorBase = {
   /** Source-type tag, used to separate statistics from communication. */
   sourceType?: SourceType;
   /**
+   * Optional finer-grained section for topic-page grouping (e.g. Supply /
+   * Affordability / Market activity / Government delivery / Inputs).
+   * Falls back to metricType when absent.
+   */
+  displayGroup?:
+    | "supply"
+    | "affordability"
+    | "market-activity"
+    | "government-delivery"
+    | "inputs";
+  /**
    * Full plain-English methodology: how the series is constructed, what
    * exactly is being counted, what population is covered, what treatment
    * (e.g. seasonal adjustment) is applied. Rendered on the Evidence Explorer.
