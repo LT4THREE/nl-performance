@@ -69,7 +69,7 @@ export default function AboutPage() {
       <Section title="Domain coverage by ministry">
         <p>
           Each Dutch ministry owns a mandate that maps to one of our domains. This table is
-          how we think about future expansion — what's live today, what's next, and which
+          how we think about future expansion — what&apos;s live today, what&apos;s next, and which
           primary data source feeds it.
         </p>
         <div className="overflow-x-auto border border-[var(--color-border)] rounded-xl mt-4">

@@ -38,7 +38,7 @@ export default async function EducationPage() {
           Government spending on education — both as a share of GDP and in absolute euros — is
           the live measure of how seriously stated education goals are funded. Attainment and
           quality indicators (DUO enrolment, OECD PISA) come next, sitting alongside the 2026
-          coalition's €1.5B additional structural investment commitment.
+          coalition&apos;s €1.5B additional structural investment commitment.
         </p>
       </header>
 

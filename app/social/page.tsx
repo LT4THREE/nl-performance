@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { PlannedNext } from "@/components/PlannedNext";
@@ -37,7 +38,7 @@ export default async function SocialPage() {
         <p className="text-[var(--color-muted)] leading-relaxed">
           Population and the broader well-being of Dutch society. Income inequality and the
           components of net migration come next, alongside SCP well-being indicators. Life
-          expectancy and healthy life expectancy now live under <a href="/health" className="underline hover:text-[var(--color-fg)]">Health</a>.
+          expectancy and healthy life expectancy now live under <Link href="/health" className="underline hover:text-[var(--color-fg)]">Health</Link>.
         </p>
       </header>
 

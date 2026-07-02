@@ -1,24 +1,46 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #ffffff;
-  --color-surface: #f6f7f9;
-  --color-surface-strong: #eceef2;
-  --color-fg: #0b1220;
-  --color-fg-soft: #1f2937;
-  --color-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-border-strong: #d1d5db;
+  /* Background scale */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-strong: #e2e8f0;
+
+  /* Border scale */
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+
+  /* Text scale */
+  --color-fg: #0f172a;
+  --color-fg-soft: #334155;
+  --color-fg-secondary: #475569;
+  --color-muted: #94a3b8;
+
+  /* Accent (blue steel — neutral, non-partisan reference color) */
   --color-accent: #2563eb;
   --color-accent-strong: #1d4ed8;
   --color-accent-soft: #eff6ff;
   --color-accent-fg: #ffffff;
-  --color-success: #15803d;
-  --color-success-soft: #ecfdf5;
-  --color-warning: #b45309;
-  --color-warning-soft: #fffbeb;
-  --color-danger: #b91c1c;
-  --color-danger-soft: #fef2f2;
+
+  /* Status palette — restrained, evidence-tone, not traffic-light */
+  --color-improving: #047857;
+  --color-improving-soft: #ecfdf5;
+  --color-watch: #b45309;
+  --color-watch-soft: #fffbeb;
+  --color-worsening: #be123c;
+  --color-worsening-soft: #fff1f2;
+  --color-neutral: #64748b;
+  --color-neutral-soft: #f1f5f9;
+
+  /* Legacy aliases so we don't break existing components in-flight */
+  --color-success: var(--color-improving);
+  --color-success-soft: var(--color-improving-soft);
+  --color-warning: var(--color-watch);
+  --color-warning-soft: var(--color-watch-soft);
+  --color-danger: var(--color-worsening);
+  --color-danger-soft: var(--color-worsening-soft);
+
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, monospace);
 }
@@ -37,7 +59,6 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Suppress the default browser focus halo; we add a visible focus-visible ring only for keyboard. */
 :focus {
   outline: none;
 }
