@@ -1,5 +1,6 @@
 import type { Commitment, CommitmentType, GovernmentActionStatus } from "@/types";
 import { formatNumber } from "@/lib/format";
+import { ConfidenceBadge } from "./ConfidenceBadge";
 
 const commitmentTypeLabel: Record<CommitmentType, string> = {
   coalition_agreement: "Coalition agreement",
@@ -57,8 +58,12 @@ export function CommitmentCard({ commitment }: { commitment: Commitment }) {
           <span className="text-xs uppercase tracking-wide text-[var(--color-muted)] font-medium">
             {commitmentTypeLabel[c.type]} · {c.yearMade}
           </span>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {c.isDemo && <DemoBadge />}
+            <ConfidenceBadge
+              level={c.indicatorIds.length === 0 ? "none" : "high"}
+              size="xs"
+            />
             <span
               className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${outcomePillClasses[c.outcomeStatus]}`}
             >

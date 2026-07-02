@@ -3,6 +3,7 @@ import type { DataPoint, IndicatorDef } from "@/types";
 import { formatValue, formatDelta, formatPeriod } from "@/lib/format";
 import { providerLabel, sourceIdentifier } from "@/lib/indicators";
 import { Sparkline } from "./Sparkline";
+import { ConfidenceBadge } from "./ConfidenceBadge";
 
 export function KpiCard({
   indicator,
@@ -37,12 +38,17 @@ export function KpiCard({
           : "",
       ].join(" ")}
     >
-      <header className="flex items-baseline justify-between gap-2">
-        <h3 className="text-sm font-medium text-[var(--color-muted)]">{indicator.shortLabel}</h3>
-        {latest && (
-          <span className="text-xs text-[var(--color-muted)]">
-            {formatPeriod(latest.date, indicator.frequency)}
-          </span>
+      <header className="space-y-1.5">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="text-sm font-medium text-[var(--color-muted)]">{indicator.shortLabel}</h3>
+          {latest && (
+            <span className="text-xs text-[var(--color-muted)]">
+              {formatPeriod(latest.date, indicator.frequency)}
+            </span>
+          )}
+        </div>
+        {indicator.confidence && (
+          <ConfidenceBadge level={indicator.confidence} size="xs" showLabel={false} />
         )}
       </header>
       <div className="flex items-end justify-between gap-3">
