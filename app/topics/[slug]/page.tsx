@@ -14,6 +14,8 @@ import { getAllGoals } from "@/lib/goals";
 import { getCommitmentsForTopic } from "@/lib/commitments";
 import { getSaidVsShowsForTopic } from "@/lib/said-vs-shows";
 import { computeHousingVerdict } from "@/lib/verdict";
+import { housingInputs } from "@/data/inputs/housing";
+import { InputEntryCard } from "@/components/InputEntryCard";
 import { pageMetadata } from "@/lib/seo";
 import type { IndicatorDef, MetricType } from "@/types";
 
@@ -226,6 +228,28 @@ export default async function TopicPage({
             />
           )}
         </>
+      )}
+
+      {topic.id === "housing" && (
+        <section aria-labelledby="inputs-heading" className="space-y-3">
+          <header>
+            <h2 id="inputs-heading" className="text-xl font-semibold">
+              Inputs &amp; spending
+            </h2>
+            <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
+              Money and legislation the state has committed to housing supply. Inputs are not
+              outcomes — the verdict panel above shows whether they are producing results.
+              Live budget-line integration (Rijksfinanciën, ministry annual reports) is
+              pending; entries marked <em>Demo</em> below are structured placeholders showing
+              the intended shape.
+            </p>
+          </header>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {housingInputs.map((entry) => (
+              <InputEntryCard key={entry.id} entry={entry} />
+            ))}
+          </div>
+        </section>
       )}
 
       {saidVsShows.length > 0 && (
