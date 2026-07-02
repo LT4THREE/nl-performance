@@ -1,0 +1,20 @@
+[
+  {
+    "id": "coalition-2026-housing-100k-said-vs-2025-cbs",
+    "topicIds": ["housing"],
+    "date": "2026-01-30",
+    "said": {
+      "quote": "Het kabinet werkt structureel toe naar zo'n 100.000 nieuwe woningen per jaar en trekt daar vanaf 2029 jaarlijks één miljard euro voor uit.",
+      "attribution": "Coalitieakkoord 2026-2030 'Aan de slag — Bouwen aan een beter Nederland' (D66, VVD, CDA)",
+      "sourceLabel": "Coalitieakkoord, 30 January 2026",
+      "sourceUrl": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
+    },
+    "shows": {
+      "finding": "In 2025 the housing stock grew by 79,910 gross dwellings (new construction + conversions), down from 82,204 in 2024 and 87,833 in 2023. That is roughly 20% below the 100,000/year target, and the underlying trend is downward over the last three years.",
+      "indicatorIds": ["new-dwellings-added"],
+      "dataSource": "CBS 82235NED (Voorraad woningen; standen en mutaties vanaf 1921), field Woningbouw_5",
+      "dataSourceUrl": "https://opendata.cbs.nl/statline/#/CBS/nl/dataset/82235NED/table"
+    },
+    "synthesis": "The commitment is to build 20% more per year than was actually delivered the year before the coalition took office — while the observed trend is currently moving in the opposite direction. The €1B/year in extra federal funding only starts in 2029."
+  }
+]

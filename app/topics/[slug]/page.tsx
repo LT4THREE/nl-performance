@@ -5,11 +5,13 @@ import { DomainNav } from "@/components/DomainNav";
 import { KpiCard } from "@/components/KpiCard";
 import { GoalCard } from "@/components/GoalCard";
 import { CommitmentCard } from "@/components/CommitmentCard";
+import { SaidVsShowsCard } from "@/components/SaidVsShowsCard";
 import { topics, findTopic } from "@/data/topics";
 import { indicatorsForTopic } from "@/lib/all-indicators";
 import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
 import { getAllGoals } from "@/lib/goals";
 import { getCommitmentsForTopic } from "@/lib/commitments";
+import { getSaidVsShowsForTopic } from "@/lib/said-vs-shows";
 import { pageMetadata } from "@/lib/seo";
 import type { IndicatorDef, MetricType } from "@/types";
 
@@ -46,6 +48,7 @@ export default async function TopicPage({
   const inds = indicatorsForTopic(topic.id);
   const goals = getAllGoals().filter((g) => topic.goalIds.includes(g.id));
   const commitments = getCommitmentsForTopic(topic.id);
+  const saidVsShows = getSaidVsShowsForTopic(topic.id);
 
   const rows = await Promise.all(
     inds.map(async (indicator) => {
@@ -136,6 +139,23 @@ export default async function TopicPage({
           subtitle="Not yet classified as outcome / output / input."
           rows={uncategorised}
         />
+      )}
+
+      {saidVsShows.length > 0 && (
+        <section className="space-y-3">
+          <header>
+            <h2 className="text-xl font-semibold">Government said · Data shows</h2>
+            <p className="text-sm text-[var(--color-fg-secondary)] mt-0.5">
+              A curated pairing of a specific government statement with the measured outcome
+              from the same time window. Factual, sourced, non-sarcastic.
+            </p>
+          </header>
+          <div className="space-y-4">
+            {saidVsShows.map((item) => (
+              <SaidVsShowsCard key={item.id} item={item} />
+            ))}
+          </div>
+        </section>
       )}
 
       {commitments.length > 0 && (
