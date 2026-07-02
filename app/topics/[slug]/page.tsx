@@ -6,12 +6,14 @@ import { KpiCard } from "@/components/KpiCard";
 import { GoalCard } from "@/components/GoalCard";
 import { CommitmentCard } from "@/components/CommitmentCard";
 import { SaidVsShowsCard } from "@/components/SaidVsShowsCard";
+import { VerdictHero } from "@/components/VerdictHero";
 import { topics, findTopic } from "@/data/topics";
 import { indicatorsForTopic } from "@/lib/all-indicators";
 import { fetchIndicatorWithTimestamp, summarize } from "@/lib/indicators";
 import { getAllGoals } from "@/lib/goals";
 import { getCommitmentsForTopic } from "@/lib/commitments";
 import { getSaidVsShowsForTopic } from "@/lib/said-vs-shows";
+import { computeHousingVerdict } from "@/lib/verdict";
 import { pageMetadata } from "@/lib/seo";
 import type { IndicatorDef, MetricType } from "@/types";
 
@@ -69,6 +71,18 @@ export default async function TopicPage({
   };
   const uncategorised = rows.filter((r) => !r.indicator.metricType);
 
+  // Housing-specific verdict hero: derives status/gap/trend from the live
+  // new-dwellings-added series and the 100k target. Only rendered on the
+  // housing topic today; other topics can add their own verdict later.
+  const heroRow =
+    topic.id === "housing"
+      ? rows.find((r) => r.indicator.id === "new-dwellings-added")
+      : undefined;
+  const verdict =
+    heroRow && heroRow.series.length > 0
+      ? computeHousingVerdict(heroRow.series, 100000)
+      : null;
+
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-12">
       <DomainNav active="topics" />
@@ -89,6 +103,10 @@ export default async function TopicPage({
           {topic.description}
         </p>
       </header>
+
+      {verdict && heroRow && (
+        <VerdictHero verdict={verdict} indicator={heroRow.indicator} />
+      )}
 
       <section aria-label="Topic context" className="grid md:grid-cols-2 gap-4 sm:gap-6">
         <FactBlock
