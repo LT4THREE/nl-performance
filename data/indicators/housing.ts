@@ -91,6 +91,28 @@ export const housingIndicators: IndicatorDef[] = [
     whyItMatters:
       "The size of the housing stock, and its year-on-year change, is the direct measure of whether the 100,000-a-year commitment is being met.",
   },
+  {
+    provider: "cbs",
+    id: "new-dwellings-added",
+    domain: "housing",
+    label: "New dwellings added per year",
+    shortLabel: "New dwellings",
+    description:
+      "Gross new dwellings added to the housing stock per year, including new construction and conversions. This is the number cited against the 2026 coalition commitment of ~100,000/year. Source: CBS 82235NED, annual back to 1921.",
+    cbsTable: "82235NED",
+    filter: "substringof('JJ', Perioden)",
+    valueField: "Woningbouw_5",
+    periodField: "Perioden",
+    unit: "count",
+    frequency: "annual",
+    higherIsBetter: true,
+    topicIds: ["housing"],
+    metricType: "output",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "This is the direct measurement of the housing supply the 2026 coalition committed to — 100,000/year by 2030. Gross additions include pure new-build plus conversions from non-housing (e.g. office-to-residential).",
+  },
 ];
 
 export function findHousingIndicator(id: string): IndicatorDef | undefined {

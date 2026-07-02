@@ -8,16 +8,16 @@
       "document": "Coalition agreement 2026–2030 'Aan de slag — Bouwen aan een beter Nederland' (D66/VVD/CDA, 30 Jan 2026)",
       "url": "https://www.kabinetsformatie2025.nl/documenten/2026/01/30/aan-de-slag---coalitieakkoord-2026-2030"
     },
-    "target": { "value": 100000, "unit": "net homes/year", "deadline": "2030-12-31" },
+    "target": { "value": 100000, "unit": "dwellings/year", "deadline": "2030-12-31" },
     "current": {
-      "value": 73000,
-      "unit": "net homes/year",
-      "asOf": "2025-12-31",
-      "sourceUrl": "https://www.cbs.nl/nl-nl/cijfers/detail/83704NED"
+      "value": 82204,
+      "unit": "dwellings/year",
+      "asOf": "2024-12-31",
+      "sourceUrl": "https://opendata.cbs.nl/statline/#/CBS/nl/dataset/82235NED/table"
     },
     "status": "behind",
-    "notes": "Current value is an illustrative estimate of recent net additions to the housing stock pending verification against CBS 83704NED year-on-year change. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
-    "indicatorIds": ["housing-stock"]
+    "notes": "Current value is gross new dwellings added in 2024 from CBS 82235NED (Woningbouw_5): 82,204 including new construction and conversions. Coalition allocates €1B/year from 2029 and 30 designated new neighbourhoods/cities.",
+    "indicatorIds": ["new-dwellings-added", "housing-stock"]
   },
   {
     "id": "defense-3p5pct-nato",
