@@ -18,6 +18,12 @@ export const healthIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["healthcare"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Life expectancy is the single most complete outcome of a health system — a summary of medical care, public health, lifestyle, and inequality all together.",
   },
   {
     provider: "cbs",
@@ -35,6 +41,12 @@ export const healthIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["healthcare"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The gap between healthy life expectancy and total life expectancy measures how many years the average Dutch person lives in poor health.",
   },
 ];
 

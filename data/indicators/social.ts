@@ -17,6 +17,12 @@ export const socialIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["social-security-poverty"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Population growth (and its migration and natural components) drives the denominator of every per-capita metric on this site.",
   },
 ];
 

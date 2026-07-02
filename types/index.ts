@@ -109,6 +109,20 @@ type IndicatorBase = {
   higherIsBetter: boolean;
   /** Optional inline caveat shown above the chart. */
   note?: string;
+  /**
+   * NEW information-architecture fields (all optional so legacy indicators
+   * keep working; per-topic filtering falls back to the topic registry).
+   */
+  /** Issue area(s) this indicator appears on. */
+  topicIds?: TopicId[];
+  /** Outcome (society-level change), output (gov delivery), or input (gov spend). */
+  metricType?: MetricType;
+  /** Analyst confidence in the metric — high by default for official statistics. */
+  confidence?: Confidence;
+  /** One-sentence answer to 'why does this matter?' shown on cards and details. */
+  whyItMatters?: string;
+  /** Source-type tag, used to separate statistics from communication. */
+  sourceType?: SourceType;
 };
 
 /** A CBS OData table-backed indicator. */

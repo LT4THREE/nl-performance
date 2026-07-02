@@ -18,6 +18,12 @@ export const economyIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "monthly",
     higherIsBetter: false,
+    topicIds: ["economy-work"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Unemployment captures whether the labour market is generating jobs at the pace new workers can enter it. A rising rate almost always signals a slowing economy.",
   },
   {
     provider: "cbs",
@@ -34,6 +40,12 @@ export const economyIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "monthly",
     higherIsBetter: false,
+    topicIds: ["cost-of-living"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Inflation is the direct measure of how much less a euro buys than a year ago. It drives real wages, savings, and the cost of living for every household.",
   },
   {
     provider: "cbs",
@@ -50,6 +62,12 @@ export const economyIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "annual",
     higherIsBetter: false,
+    topicIds: ["public-finances"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The share of GDP owed by government constrains fiscal room for future spending, taxation, and shocks. Kept below the EU 60% Maastricht reference for two decades.",
   },
   {
     provider: "ecb",
@@ -64,6 +82,12 @@ export const economyIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "daily",
     higherIsBetter: false,
+    topicIds: ["cost-of-living"],
+    metricType: "input",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The ECB policy rate is the dominant driver of Dutch mortgage and savings rates. It shapes the cost of living for anyone with a home loan or a savings account.",
   },
 ];
 

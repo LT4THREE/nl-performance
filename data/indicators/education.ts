@@ -20,6 +20,12 @@ export const educationIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["education"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Tertiary attainment is the standard cross-country measure of educational success — it tracks the share of working-age adults with a university-level qualification.",
   },
   {
     provider: "cbs",
@@ -36,6 +42,12 @@ export const educationIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["education"],
+    metricType: "input",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Education spending as a share of GDP is the standard measure of the resources government commits to the school system. Note: an input, not an outcome — more money does not automatically mean better results.",
   },
   {
     provider: "cbs",
@@ -52,6 +64,12 @@ export const educationIndicators: IndicatorDef[] = [
     unit: "eurMillion",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["education"],
+    metricType: "input",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The absolute euro figure lines up directly with the 2026 coalition's €1.5B additional structural-investment commitment.",
   },
 ];
 

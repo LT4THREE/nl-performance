@@ -17,6 +17,12 @@ export const housingIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "monthly",
     higherIsBetter: false,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The average sale price is the most-cited proxy for housing affordability. Rising prices lock first-time buyers out of ownership.",
   },
   {
     provider: "cbs",
@@ -33,6 +39,12 @@ export const housingIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "monthly",
     higherIsBetter: false,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Year-on-year price change tracks how quickly the housing ladder is pulling away from median incomes.",
   },
   {
     provider: "cbs",
@@ -49,6 +61,12 @@ export const housingIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "monthly",
     higherIsBetter: true,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Transaction volume is a leading indicator of housing-market health — collapsing volumes typically precede price corrections.",
   },
   {
     provider: "cbs",
@@ -66,6 +84,12 @@ export const housingIndicators: IndicatorDef[] = [
     unit: "count",
     frequency: "annual",
     higherIsBetter: true,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The size of the housing stock, and its year-on-year change, is the direct measure of whether the 100,000-a-year commitment is being met.",
   },
 ];
 

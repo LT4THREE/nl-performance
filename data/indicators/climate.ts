@@ -21,6 +21,12 @@ export const climateIndicators: IndicatorDef[] = [
     unit: "percent",
     frequency: "annual",
     higherIsBetter: false,
+    topicIds: ["climate-energy"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The Klimaatwet target of −55% vs 1990 by 2030 is the single most consequential federal commitment. This indicator tracks it directly.",
   },
   {
     provider: "eurostat",
@@ -40,6 +46,12 @@ export const climateIndicators: IndicatorDef[] = [
     unit: "ktCO2eq",
     frequency: "annual",
     higherIsBetter: false,
+    topicIds: ["climate-energy"],
+    metricType: "outcome",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Absolute emissions are the underlying quantity behind the % vs 1990 figure — they matter for tracking the physical volume of the transition.",
   },
 ];
 
