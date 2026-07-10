@@ -240,6 +240,33 @@ export const housingIndicators: IndicatorDef[] = [
     historicalContext:
       "Net additions have run below gross additions by roughly 10-12k dwellings/year, dominated by demolitions. Recent values: 2023: 78,819; 2024: 70,420; 2025: 70,359. The 2023→2024 step-down is significant — largely a jump in demolitions from 9.3k to 11.8k.",
   },
+  {
+    provider: "cbs",
+    id: "house-price-index",
+    domain: "housing",
+    label: "Existing-home price index (2020 = 100)",
+    shortLabel: "Price index",
+    description:
+      "The CBS/Kadaster Prijsindex Bestaande Koopwoningen (PBK) — a hedonic (composition-controlled) index of Dutch existing-home sale prices, rebased to 2020 = 100. Better than the average sale price for tracking price movement because it filters out changes in the mix of homes sold each month.",
+    cbsTable: "85773NED",
+    filter: "substringof('MM', Perioden)",
+    valueField: "PrijsindexVerkoopprijzen_1",
+    periodField: "Perioden",
+    unit: "index",
+    frequency: "monthly",
+    higherIsBetter: false,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    displayGroup: "affordability",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The average sale price moves with the mix of homes sold that month; the price index does not. This is the affordability signal the DNB and international bodies (ECB, OECD) cite for the Netherlands. A value of 155 means existing homes cost 55% more than in the 2020 base period.",
+    methodology:
+      "Hedonic quality-adjusted price index. Each transaction is weighted using observed characteristics (surface area, region, dwelling type, year built) so month-to-month change reflects pure price movement rather than compositional differences. Published jointly by CBS and Kadaster from the same Kadaster transaction register that feeds the average-sale-price series.",
+    historicalContext:
+      "The index roughly doubled between 2013 (below 80) and 2022 (above 155), then dropped ~7% into the 2023 trough as mortgage rates jumped, before resuming growth from mid-2023. Where 2000 = 60 on the same base, the doubling since the mid-2010s dominates the whole 25-year series.",
+  },
 ];
 
 export function findHousingIndicator(id: string): IndicatorDef | undefined {
