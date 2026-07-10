@@ -150,7 +150,7 @@ export const housingIndicators: IndicatorDef[] = [
     methodology:
       "Sum of (a) new-build dwellings completed (Nieuwbouw) and (b) 'other additions' (OverigeToevoeging) — mostly conversions from non-residential buildings. Reported by CBS from BAG registrations, published annually. Demolitions (Sloop) and correction items are tracked separately in the same table.",
     historicalContext:
-      "Since 2015, gross additions have averaged around 75,000/year, peaking near 90,000 in 2022-2023 and falling back to 82,204 in 2024 as high interest rates slowed construction starts. Each successive political commitment (Rutte-IV 100k/yr, then 2026 D66/VVD/CDA 100k/yr) has been set roughly 20-25% above the observed pace.",
+      "Since 2015, gross additions have averaged around 75,000/year, peaking near 90,000 in 2022-2023 and falling back to 79,910 in 2025 as high interest rates slowed construction starts. Each recent public 100,000/year target has been set roughly 20-25% above the observed pace.",
     relatedLegislation: [
       {
         name: "Wet regie volkshuisvesting (identifier pending verification)",
@@ -158,6 +158,33 @@ export const housingIndicators: IndicatorDef[] = [
         role: "Discussed as the statutory backbone giving national government authority to direct provincial and municipal housing targets. Specific BWBR identifier and current enacted status have not been independently re-verified in this build.",
       },
     ],
+  },
+  {
+    provider: "cbs",
+    id: "pure-new-build",
+    domain: "housing",
+    label: "Pure new-build dwellings per year",
+    shortLabel: "Pure new-build",
+    description:
+      "New-build dwellings (excluding conversions from non-residential buildings) added to the Dutch housing stock per year. This is the narrower construction-only measure that sits inside the wider gross-additions figure. Source: CBS 82235NED, annual back to 1921.",
+    cbsTable: "82235NED",
+    filter: "substringof('JJ', Perioden)",
+    valueField: "Nieuwbouw_2",
+    periodField: "Perioden",
+    unit: "count",
+    frequency: "annual",
+    higherIsBetter: true,
+    topicIds: ["housing"],
+    metricType: "output",
+    displayGroup: "supply",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Pure new-build isolates the actual construction pipeline from conversion effects. When gross additions rise but pure new-build falls, growth is coming from re-purposing existing buildings rather than laying new foundations.",
+    methodology:
+      "The Nieuwbouw field in CBS 82235NED: dwellings entered into the BAG for the first time from newly-constructed residential buildings. Excludes 'other additions' (OverigeToevoeging_3), which mostly capture office-to-residential and other conversions and are counted separately in the same table.",
+    historicalContext:
+      "Pure new-build has been consistently below gross additions by roughly 8,000-15,000 dwellings/year. In 2025 the gap was 79,910 gross vs 69,189 pure new-build — the 10,721 difference is dominated by conversions of non-residential buildings.",
   },
 ];
 
