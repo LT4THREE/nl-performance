@@ -26,6 +26,14 @@ const trendTone: Record<Verdict["threeYearTrend"], string> = {
   unknown: "text-[var(--color-muted)]",
 };
 
+export type RelatedMeasures = {
+  /** All values from CBS 82235NED for the same latest period. */
+  grossAdditions?: number;
+  pureNewBuild?: number;
+  demolitions?: number;
+  netAdditions?: number;
+};
+
 /**
  * The dominant panel at the top of the housing topic page. Answers, at a
  * glance: what is being tracked, what is the target, what is the actual,
@@ -35,9 +43,11 @@ const trendTone: Record<Verdict["threeYearTrend"], string> = {
 export function VerdictHero({
   verdict,
   indicator,
+  relatedMeasures,
 }: {
   verdict: Verdict;
   indicator: IndicatorDef;
+  relatedMeasures?: RelatedMeasures;
 }) {
   return (
     <section
@@ -126,6 +136,42 @@ export function VerdictHero({
         </Cell>
       </div>
 
+      {/* Related measures strip — grounds the verdict number in the other three
+          CBS fields from the same table so gross vs net is not implicit. */}
+      {relatedMeasures && hasAnyRelated(relatedMeasures) && (
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg)] px-6 sm:px-8 py-4">
+          <p className="text-xs uppercase tracking-wide text-[var(--color-muted)] font-medium mb-2">
+            Related measures — same period, same CBS table
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <RelatedCell
+              label="Gross additions"
+              hint="Woningbouw_5"
+              value={relatedMeasures.grossAdditions}
+              isTarget={indicator.id === "new-dwellings-added"}
+            />
+            <RelatedCell
+              label="Pure new-build"
+              hint="Nieuwbouw_2"
+              value={relatedMeasures.pureNewBuild}
+              isTarget={indicator.id === "pure-new-build"}
+            />
+            <RelatedCell
+              label="Demolitions"
+              hint="Sloop_6"
+              value={relatedMeasures.demolitions}
+              isTarget={indicator.id === "dwellings-demolished"}
+            />
+            <RelatedCell
+              label="Net additions"
+              hint="SaldoVoorraad_8"
+              value={relatedMeasures.netAdditions}
+              isTarget={indicator.id === "net-new-dwellings"}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Bottom: methodology + last-updated */}
       <footer className="px-6 sm:px-8 py-4 border-t border-[var(--color-border)] bg-[var(--color-bg)] text-xs text-[var(--color-fg-secondary)] space-y-2">
         <p>
@@ -136,8 +182,8 @@ export function VerdictHero({
           above is live.
         </p>
         <p>
-          <strong className="text-[var(--color-fg-soft)]">On the metric: </strong>
-          <em>Woningbouw_5</em> in CBS table{" "}
+          <strong className="text-[var(--color-fg-soft)]">On the metric — gross vs net: </strong>
+          The verdict above uses <em>Woningbouw_5</em> from CBS table{" "}
           <a
             href="https://opendata.cbs.nl/statline/#/CBS/nl/dataset/82235NED/table"
             target="_blank"
@@ -146,10 +192,14 @@ export function VerdictHero({
           >
             82235NED
           </a>{" "}
-          — gross new dwellings added per year (new construction + conversions). This is a
-          slightly wider count than pure net-new build (which is <em>Nieuwbouw_2</em> in the
-          same table); the shared reference target is stated against the wider Woningbouw
-          measure. Demolitions (<em>Sloop_6</em>) are tracked separately.
+          — gross new dwellings added (new construction + conversions from non-residential
+          use). The 100k target has historically been stated against this <em>gross</em>{" "}
+          figure. The Related-measures strip above shows what the same period looks like at
+          the three sibling readings: pure new-build (<em>Nieuwbouw_2</em>), demolitions
+          (<em>Sloop_6</em>), and CBS&apos;s own net stock change{" "}
+          (<em>SaldoVoorraad_8</em> — the balance-sheet result after demolitions and
+          statistical corrections). Net stock growth typically runs 10-12k dwellings below
+          gross additions.
         </p>
         <p>
           <strong className="text-[var(--color-fg-soft)]">Last observation: </strong>
@@ -157,6 +207,45 @@ export function VerdictHero({
         </p>
       </footer>
     </section>
+  );
+}
+
+function hasAnyRelated(r: RelatedMeasures): boolean {
+  return (
+    r.grossAdditions !== undefined ||
+    r.pureNewBuild !== undefined ||
+    r.demolitions !== undefined ||
+    r.netAdditions !== undefined
+  );
+}
+
+function RelatedCell({
+  label,
+  hint,
+  value,
+  isTarget,
+}: {
+  label: string;
+  hint: string;
+  value: number | undefined;
+  isTarget: boolean;
+}) {
+  return (
+    <div
+      className={
+        isTarget
+          ? "px-3 py-2 rounded-md bg-[var(--color-accent-soft)] border border-[var(--color-accent)]/20"
+          : "px-3 py-2"
+      }
+    >
+      <p className="text-[10px] uppercase tracking-wide text-[var(--color-muted)] font-medium">
+        {label}
+      </p>
+      <p className="text-base font-semibold text-[var(--color-fg)] tracking-tight mt-0.5">
+        {value === undefined ? "—" : formatNumber(value)}
+      </p>
+      <p className="text-[10px] text-[var(--color-muted)] font-mono mt-0.5">{hint}</p>
+    </div>
   );
 }
 

@@ -133,6 +133,22 @@ export default async function TopicPage({
       ? computeHousingVerdict(heroRow.series, 100000)
       : null;
 
+  // Related measures shown alongside the verdict so gross vs net vs
+  // pure-new-build vs demolitions is explicit — all four come from the
+  // same CBS 82235NED table and the same latest annual observation.
+  const relatedMeasures =
+    topic.id === "housing"
+      ? {
+          grossAdditions: rows.find((r) => r.indicator.id === "new-dwellings-added")?.latest
+            ?.value,
+          pureNewBuild: rows.find((r) => r.indicator.id === "pure-new-build")?.latest?.value,
+          demolitions: rows.find((r) => r.indicator.id === "dwellings-demolished")?.latest
+            ?.value,
+          netAdditions: rows.find((r) => r.indicator.id === "net-new-dwellings")?.latest
+            ?.value,
+        }
+      : undefined;
+
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-10 space-y-10 sm:space-y-12">
       <DomainNav active="topics" />
@@ -155,7 +171,11 @@ export default async function TopicPage({
       </header>
 
       {verdict && heroRow && (
-        <VerdictHero verdict={verdict} indicator={heroRow.indicator} />
+        <VerdictHero
+          verdict={verdict}
+          indicator={heroRow.indicator}
+          relatedMeasures={relatedMeasures}
+        />
       )}
 
       <section aria-label="Topic context" className="grid md:grid-cols-2 gap-4 sm:gap-6">
