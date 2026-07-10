@@ -213,6 +213,33 @@ export const housingIndicators: IndicatorDef[] = [
     historicalContext:
       "Annual demolitions have hovered around 9,000-12,000 dwellings/year in recent years. In 2025: 9,551; 2024: 11,814; 2023: 9,337. Combined with the recent decline in gross additions, this means net stock growth has fallen from ~78,500 in 2023 to ~70,400 in 2024 to ~70,300 in 2025.",
   },
+  {
+    provider: "cbs",
+    id: "net-new-dwellings",
+    domain: "housing",
+    label: "Net new dwellings per year",
+    shortLabel: "Net new dwellings",
+    description:
+      "Net change in the Dutch housing stock per year, after subtracting demolitions and applying CBS's own correction items. This is the number to watch if the target is interpreted as 'net homes added' rather than gross production. Source: CBS 82235NED (SaldoVoorraad_8), annual back to 1921.",
+    cbsTable: "82235NED",
+    filter: "substringof('JJ', Perioden)",
+    valueField: "SaldoVoorraad_8",
+    periodField: "Perioden",
+    unit: "count",
+    frequency: "annual",
+    higherIsBetter: true,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    displayGroup: "supply",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "Different actors state the 100,000/year public target in different ways — sometimes as gross production, sometimes as net additions. This is CBS's own net figure and answers the question 'how much did the housing stock actually grow last year?' directly.",
+    methodology:
+      "The SaldoVoorraad field in CBS 82235NED = Nieuwbouw + OverigeToevoeging − Sloop − OverigeOnttrekking + Correctie. Same as adding gross-additions and subtracting demolitions plus other withdrawals plus any statistical corrections. Equal to the start-of-year stock minus prior end-of-year stock.",
+    historicalContext:
+      "Net additions have run below gross additions by roughly 10-12k dwellings/year, dominated by demolitions. Recent values: 2023: 78,819; 2024: 70,420; 2025: 70,359. The 2023→2024 step-down is significant — largely a jump in demolitions from 9.3k to 11.8k.",
+  },
 ];
 
 export function findHousingIndicator(id: string): IndicatorDef | undefined {
