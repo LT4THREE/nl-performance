@@ -186,6 +186,33 @@ export const housingIndicators: IndicatorDef[] = [
     historicalContext:
       "Pure new-build has been consistently below gross additions by roughly 8,000-15,000 dwellings/year. In 2025 the gap was 79,910 gross vs 69,189 pure new-build — the 10,721 difference is dominated by conversions of non-residential buildings.",
   },
+  {
+    provider: "cbs",
+    id: "dwellings-demolished",
+    domain: "housing",
+    label: "Dwellings demolished per year",
+    shortLabel: "Demolitions",
+    description:
+      "Total dwellings removed from the Dutch housing stock through demolition per year. Subtracts from gross additions to give the net change in stock. Source: CBS 82235NED, annual back to 1921.",
+    cbsTable: "82235NED",
+    filter: "substringof('JJ', Perioden)",
+    valueField: "Sloop_6",
+    periodField: "Perioden",
+    unit: "count",
+    frequency: "annual",
+    higherIsBetter: false,
+    topicIds: ["housing"],
+    metricType: "outcome",
+    displayGroup: "supply",
+    confidence: "high",
+    sourceType: "official_statistics",
+    whyItMatters:
+      "The 100,000/year public target is typically stated against gross additions, but the net effect on the housing stock is gross additions minus demolitions. Ignoring demolitions overstates supply growth.",
+    methodology:
+      "The Sloop field in CBS 82235NED: dwellings removed from the BAG through demolition. Excludes conversions from residential to non-residential use, which are counted as OverigeOnttrekking_4 (other withdrawals) in the same table.",
+    historicalContext:
+      "Annual demolitions have hovered around 9,000-12,000 dwellings/year in recent years. In 2025: 9,551; 2024: 11,814; 2023: 9,337. Combined with the recent decline in gross additions, this means net stock growth has fallen from ~78,500 in 2023 to ~70,400 in 2024 to ~70,300 in 2025.",
+  },
 ];
 
 export function findHousingIndicator(id: string): IndicatorDef | undefined {
